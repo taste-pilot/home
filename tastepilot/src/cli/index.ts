@@ -85,8 +85,31 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
       for (const err of planResult.errors) process.stderr.write(`  - ${err}\n`);
       return 1;
     }
+
+    // Durable artwork: sync the manifest with the plan, fill in placeholders
+    // for anything missing, and reuse everything that already exists.
+    const manifestPath = flag("manifest") ?? "artwork-manifest.json";
+    const assetsDir = flag("assets") ?? "assets";
+    const {
+      loadManifest,
+      saveManifest,
+      syncManifestWithPlan,
+      ensureArtworkFiles,
+      artworkFilesFromManifest,
+    } = await import("../artwork/index.js");
+    let manifest = await loadManifest(manifestPath);
+    manifest = syncManifestWithPlan(manifest, planResult.plan);
+    manifest = await ensureArtworkFiles(manifest, planResult.plan, assetsDir);
+    await saveManifest(manifestPath, manifest);
+
     const result = await renderPublication(
-      { document: doc, canon, plan: planResult.plan },
+      {
+        document: doc,
+        canon,
+        plan: planResult.plan,
+        artworkFiles: artworkFilesFromManifest(manifest),
+        assetsSourceDir: assetsDir,
+      },
       outDir,
     );
     process.stdout.write(`✓ Publication rendered to ${result.outDir}/\n`);

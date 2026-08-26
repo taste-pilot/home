@@ -12,8 +12,10 @@ export interface RenderInputs {
   document: SemanticDocument;
   canon: CanonStyle;
   plan: ArtDirectionPlan;
-  /** Artwork id → relative file path (from the artwork manifest, M6+). */
+  /** Artwork id → assets-relative path (e.g. "assets/id.svg"), from the manifest. */
   artworkFiles?: ReadonlyMap<string, string>;
+  /** Directory holding the source asset files to copy into the publication. */
+  assetsSourceDir?: string;
 }
 
 export interface RenderResult {
@@ -36,6 +38,13 @@ export async function renderPublication(
   const css = tokensCss(canon) + "\n" + (await baseCss()) + silhouetteCss(inputs);
 
   await mkdir(join(outDir, "assets"), { recursive: true });
+  if (inputs.assetsSourceDir && inputs.artworkFiles) {
+    for (const relPath of inputs.artworkFiles.values()) {
+      const name = relPath.replace(/^assets\//, "");
+      const source = join(inputs.assetsSourceDir, name);
+      await copyFile(source, join(outDir, "assets", name));
+    }
+  }
   await writeFile(join(outDir, "index.html"), html, "utf8");
   await writeFile(join(outDir, "publication.css"), css, "utf8");
   await copyFile(rendererAsset("js", "publication.js"), join(outDir, "publication.js"));
