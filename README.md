@@ -15,7 +15,7 @@ Turn writing into publications worth reading.
 
 ---
 
-> 🚧 **Status: v0.1 nearly there.** Ingestion, the five starter Canons, the Art Direction contract, the deterministic renderer, drop caps, Light/Dark/Auto, durable artwork, URL + Brand DNA, print/PDF, visual QA, and the three-Canon demo are all in. Canon tooling and final packaging remain — star or watch to follow along.
+> **Status: v0.1.** The Publication Skilllet MVP: text/Markdown/HTML/URL ingestion, five starter Canons, the Art Direction contract, a deterministic renderer, drop caps, Light/Dark/Auto, durable artwork, Brand DNA with Preserve/Evolve/Reinvent, print/PDF composition, automated visual QA, Canon tooling, and the three-Canon demo. The Community Canon ecosystem is next — star or watch to follow along.
 
 ![The same document and the same artwork rendered through Modern Editorial, Literary Classic, and Swiss Clean](site/assets/demo-strip.png)
 
@@ -167,7 +167,7 @@ Live at [tastepilot.org](https://tastepilot.org/#demo) · inspectable output in 
 
 ## Roadmap
 
-**v0.1 (in progress)** — the Publication Skilllet: text/Markdown/HTML/URL ingestion, five starter Canons, Art Direction Plan contract, deterministic renderer, drop caps, Light/Dark/Auto, gentle motion, durable artwork manifest, Brand DNA extraction with Preserve/Evolve/Reinvent, print composition + PDF, automated visual QA, and the three-Canon demo.
+**v0.1 (shipped)** — the Publication Skilllet: text/Markdown/HTML/URL ingestion, five starter Canons, Art Direction Plan contract, deterministic renderer, drop caps, Light/Dark/Auto, gentle motion, durable artwork manifest, Brand DNA extraction with Preserve/Evolve/Reinvent, print composition + PDF, automated visual QA, Canon validate/install tooling, and the three-Canon demo.
 
 **Beyond v0.1** — the ecosystem:
 
