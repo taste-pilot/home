@@ -164,6 +164,31 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
     return 0;
   }
 
+  if (command === "pdf") {
+    const file = rest.find((a) => !a.startsWith("--"));
+    if (!file) {
+      process.stderr.write("usage: tastepilot pdf <path/to/index.html> [--format letter|a4] [--out <file>]\n");
+      return 1;
+    }
+    const formatFlag = rest.indexOf("--format");
+    const format = formatFlag >= 0 ? rest[formatFlag + 1] : undefined;
+    if (format !== undefined && format !== "letter" && format !== "a4") {
+      process.stderr.write(`unknown format "${format}" — use letter or a4\n`);
+      return 1;
+    }
+    const outFlagIdx = rest.indexOf("--out");
+    const out = outFlagIdx >= 0 ? rest[outFlagIdx + 1] : undefined;
+
+    const { composePdf } = await import("../print/index.js");
+    const result = await composePdf(file, {
+      ...(format ? { format } : {}),
+      ...(out ? { out } : {}),
+    });
+    process.stdout.write(`✓ Print edition composed: ${result.path} (${result.pageCount} pages)\n`);
+    for (const warning of result.warnings) process.stdout.write(`  ⚠ ${warning}\n`);
+    return 0;
+  }
+
   if (command === "canons") {
     const { listCanons } = await import("../canon/index.js");
     const canons = await listCanons();
