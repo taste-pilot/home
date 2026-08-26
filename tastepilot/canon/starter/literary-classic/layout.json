@@ -1,0 +1,10 @@
+{
+  "measureCh": 62,
+  "density": "comfortable",
+  "headingTreatment": "plain",
+  "quoteTreatment": "centered-italic",
+  "calloutTreatment": "rule-left",
+  "statisticTreatment": "inline",
+  "ornament": "fleuron",
+  "cornerRadius": "none"
+}

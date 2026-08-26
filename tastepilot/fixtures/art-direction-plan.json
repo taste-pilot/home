@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "style": "modern-editorial",
+  "artDensity": "medium",
+  "motion": "gentle",
+  "sections": [
+    {
+      "sectionId": "section-1",
+      "composition": "opening-editorial",
+      "dropCap": "classic-5",
+      "artwork": [],
+      "pullQuotes": [],
+      "statistics": [],
+      "callouts": []
+    },
+    {
+      "sectionId": "why-presentation-changes-outcomes",
+      "composition": "pull-quote-break",
+      "artwork": [],
+      "pullQuotes": [{ "blockId": "why-presentation-changes-outcomes-quote-4" }],
+      "statistics": [],
+      "callouts": []
+    },
+    {
+      "sectionId": "the-anatomy-of-a-publication",
+      "composition": "margin-art-right",
+      "artwork": [
+        {
+          "id": "anatomy-type-specimen",
+          "placement": "right",
+          "wrap": "silhouette",
+          "size": "medium",
+          "brief": "A transparent editorial line illustration of a classical type specimen sheet, single warm accent color, generous negative space.",
+          "nearBlockId": "the-anatomy-of-a-publication-paragraph-3"
+        }
+      ],
+      "pullQuotes": [],
+      "statistics": [],
+      "callouts": []
+    },
+    {
+      "sectionId": "the-process-start-to-finish",
+      "composition": "standard",
+      "artwork": [],
+      "pullQuotes": [],
+      "statistics": [],
+      "callouts": []
+    },
+    {
+      "sectionId": "common-failures",
+      "composition": "diagram-section",
+      "artwork": [],
+      "pullQuotes": [],
+      "statistics": [],
+      "callouts": []
+    },
+    {
+      "sectionId": "a-word-on-restraint",
+      "composition": "quiet-section",
+      "artwork": [],
+      "pullQuotes": [],
+      "statistics": [],
+      "callouts": []
+    },
+    {
+      "sectionId": "where-to-go-from-here",
+      "composition": "standard",
+      "artwork": [],
+      "pullQuotes": [],
+      "statistics": [],
+      "callouts": []
+    }
+  ]
+}

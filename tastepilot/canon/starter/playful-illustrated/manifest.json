@@ -1,0 +1,36 @@
+{
+  "id": "playful-illustrated",
+  "name": "Playful Illustrated",
+  "author": "TastePilot",
+  "license": "MIT",
+  "version": "1.0.0",
+  "tier": "starter",
+  "description": "Illustration-forward and light on its feet: rounded shapes, saturated accents, expressive callouts.",
+  "tags": [
+    "playful",
+    "illustrated",
+    "friendly",
+    "colorful"
+  ],
+  "dropCaps": {
+    "preferred": "background",
+    "allowed": [
+      "background",
+      "outline",
+      "raised",
+      "none"
+    ]
+  },
+  "artwork": {
+    "density": "rich",
+    "style": "friendly flat spot illustrations with rounded shapes and saturated accent colors",
+    "wrapAllowed": true,
+    "placements": [
+      "right",
+      "left",
+      "full",
+      "background",
+      "inline"
+    ]
+  }
+}

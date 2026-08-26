@@ -1,0 +1,12 @@
+{
+  "pageSize": "letter",
+  "marginsMm": {
+    "top": 25,
+    "bottom": 28,
+    "inner": 24,
+    "outer": 24
+  },
+  "showFolios": true,
+  "fontScale": 1.0,
+  "background": "paper-tint"
+}

@@ -1,0 +1,12 @@
+{
+  "pageSize": "a4",
+  "marginsMm": {
+    "top": 20,
+    "bottom": 20,
+    "inner": 20,
+    "outer": 20
+  },
+  "showFolios": false,
+  "fontScale": 0.9,
+  "background": "white"
+}

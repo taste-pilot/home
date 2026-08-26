@@ -1,0 +1,35 @@
+{
+  "id": "modern-editorial",
+  "name": "Modern Editorial",
+  "author": "TastePilot",
+  "license": "MIT",
+  "version": "1.0.0",
+  "tier": "starter",
+  "description": "Confident contemporary long-form: generous whitespace, expressive drop caps, warm neutral palette.",
+  "tags": [
+    "editorial",
+    "contemporary",
+    "long-form",
+    "warm"
+  ],
+  "dropCaps": {
+    "preferred": "sculptural",
+    "allowed": [
+      "sculptural",
+      "classic-5",
+      "raised",
+      "none"
+    ]
+  },
+  "artwork": {
+    "density": "medium",
+    "style": "transparent contemporary editorial linework with a single warm accent color, generous negative space",
+    "wrapAllowed": true,
+    "placements": [
+      "right",
+      "left",
+      "full",
+      "inline"
+    ]
+  }
+}

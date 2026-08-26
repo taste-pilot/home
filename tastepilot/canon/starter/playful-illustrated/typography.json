@@ -1,0 +1,67 @@
+{
+  "fontCount": 2,
+  "title": {
+    "family": "Baloo 2",
+    "fallbacks": [
+      "-apple-system",
+      "Segoe UI",
+      "Helvetica Neue",
+      "Arial",
+      "sans-serif"
+    ],
+    "googleFont": "Baloo 2",
+    "weights": [
+      500,
+      700
+    ]
+  },
+  "heading": {
+    "family": "Baloo 2",
+    "fallbacks": [
+      "-apple-system",
+      "Segoe UI",
+      "Helvetica Neue",
+      "Arial",
+      "sans-serif"
+    ],
+    "googleFont": "Baloo 2",
+    "weights": [
+      500,
+      700
+    ]
+  },
+  "body": {
+    "family": "Nunito",
+    "fallbacks": [
+      "-apple-system",
+      "Segoe UI",
+      "Helvetica Neue",
+      "Arial",
+      "sans-serif"
+    ],
+    "googleFont": "Nunito",
+    "weights": [
+      400,
+      700
+    ]
+  },
+  "utility": {
+    "family": "Nunito",
+    "fallbacks": [
+      "-apple-system",
+      "Segoe UI",
+      "Helvetica Neue",
+      "Arial",
+      "sans-serif"
+    ],
+    "googleFont": "Nunito",
+    "weights": [
+      400,
+      600
+    ]
+  },
+  "baseSizeRem": 1.0625,
+  "scaleRatio": 1.4,
+  "bodyLeading": 1.7,
+  "headingLeading": 1.1
+}

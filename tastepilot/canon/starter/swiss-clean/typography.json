@@ -1,0 +1,67 @@
+{
+  "fontCount": 2,
+  "title": {
+    "family": "Archivo",
+    "fallbacks": [
+      "-apple-system",
+      "Segoe UI",
+      "Helvetica Neue",
+      "Arial",
+      "sans-serif"
+    ],
+    "googleFont": "Archivo",
+    "weights": [
+      500,
+      700
+    ]
+  },
+  "heading": {
+    "family": "Archivo",
+    "fallbacks": [
+      "-apple-system",
+      "Segoe UI",
+      "Helvetica Neue",
+      "Arial",
+      "sans-serif"
+    ],
+    "googleFont": "Archivo",
+    "weights": [
+      500,
+      700
+    ]
+  },
+  "body": {
+    "family": "Inter",
+    "fallbacks": [
+      "-apple-system",
+      "Segoe UI",
+      "Helvetica Neue",
+      "Arial",
+      "sans-serif"
+    ],
+    "googleFont": "Inter",
+    "weights": [
+      400,
+      600
+    ]
+  },
+  "utility": {
+    "family": "Inter",
+    "fallbacks": [
+      "-apple-system",
+      "Segoe UI",
+      "Helvetica Neue",
+      "Arial",
+      "sans-serif"
+    ],
+    "googleFont": "Inter",
+    "weights": [
+      400,
+      500
+    ]
+  },
+  "baseSizeRem": 1.0,
+  "scaleRatio": 1.2,
+  "bodyLeading": 1.55,
+  "headingLeading": 1.05
+}

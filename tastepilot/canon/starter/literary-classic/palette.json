@@ -1,0 +1,22 @@
+{
+  "light": {
+    "paper": "#f8f4ea",
+    "ink": "#2b2620",
+    "inkSoft": "#6b5f4e",
+    "accent": "#7a3b2e",
+    "rule": "#e5dcc8",
+    "panel": "#f1ead9",
+    "codeBg": "#2b2620",
+    "codeInk": "#f1ead9"
+  },
+  "dark": {
+    "paper": "#1b1712",
+    "ink": "#e8ddc8",
+    "inkSoft": "#a3927a",
+    "accent": "#c98263",
+    "rule": "#383025",
+    "panel": "#241f18",
+    "codeBg": "#12100c",
+    "codeInk": "#d8cdb8"
+  }
+}

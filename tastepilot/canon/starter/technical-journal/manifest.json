@@ -1,0 +1,31 @@
+{
+  "id": "technical-journal",
+  "name": "Technical Journal",
+  "author": "TastePilot",
+  "license": "MIT",
+  "version": "1.0.0",
+  "tier": "starter",
+  "description": "Structured and precise: numbered headings, strong tables, statistics given panels.",
+  "tags": [
+    "technical",
+    "journal",
+    "documentation",
+    "precise"
+  ],
+  "dropCaps": {
+    "preferred": "none",
+    "allowed": [
+      "none",
+      "classic-3"
+    ]
+  },
+  "artwork": {
+    "density": "light",
+    "style": "precise labeled technical diagrams with thin strokes and restrained color",
+    "wrapAllowed": false,
+    "placements": [
+      "full",
+      "inline"
+    ]
+  }
+}

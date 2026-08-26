@@ -1,0 +1,59 @@
+{
+  "fontCount": 1,
+  "title": {
+    "family": "EB Garamond",
+    "fallbacks": [
+      "Georgia",
+      "Times New Roman",
+      "serif"
+    ],
+    "googleFont": "EB Garamond",
+    "weights": [
+      400,
+      500
+    ]
+  },
+  "heading": {
+    "family": "EB Garamond",
+    "fallbacks": [
+      "Georgia",
+      "Times New Roman",
+      "serif"
+    ],
+    "googleFont": "EB Garamond",
+    "weights": [
+      400,
+      500
+    ]
+  },
+  "body": {
+    "family": "EB Garamond",
+    "fallbacks": [
+      "Georgia",
+      "Times New Roman",
+      "serif"
+    ],
+    "googleFont": "EB Garamond",
+    "weights": [
+      400,
+      500
+    ]
+  },
+  "utility": {
+    "family": "EB Garamond",
+    "fallbacks": [
+      "Georgia",
+      "Times New Roman",
+      "serif"
+    ],
+    "googleFont": "EB Garamond",
+    "weights": [
+      400,
+      500
+    ]
+  },
+  "baseSizeRem": 1.125,
+  "scaleRatio": 1.25,
+  "bodyLeading": 1.6,
+  "headingLeading": 1.15
+}

@@ -1,0 +1,10 @@
+{
+  "measureCh": 66,
+  "density": "airy",
+  "headingTreatment": "eyebrow",
+  "quoteTreatment": "oversized-mark",
+  "calloutTreatment": "panel",
+  "statisticTreatment": "oversized",
+  "ornament": "rule",
+  "cornerRadius": "subtle"
+}
