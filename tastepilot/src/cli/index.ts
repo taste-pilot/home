@@ -13,7 +13,9 @@ Usage:
 Commands:
   ingest <file> [--out <dir>]   Convert .txt/.md/.html into a Semantic Document
   ingest-url <url>              Convert a public webpage, with Brand DNA        (M7)
-  render                        Render a publication from document+canon+plan   (M4)
+  render --document <json> --canon <id> --plan <json> [--out <dir>]
+                                Render the publication (HTML/CSS/JS/JSON)
+  canons                        List every canon available, across all sources
   pdf <index.html>              Produce the print-composed PDF edition          (M8)
   canon validate|list|install   Canon tooling                                   (M11)
 
@@ -47,6 +49,60 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
     process.stdout.write(
       `  ${doc.metadata.title || "(untitled)"} — ${doc.sections.length} section(s)\n`,
     );
+    return 0;
+  }
+
+  if (command === "render") {
+    const flag = (name: string): string | undefined => {
+      const i = rest.indexOf(`--${name}`);
+      return i >= 0 ? rest[i + 1] : undefined;
+    };
+    const documentPath = flag("document");
+    const canonId = flag("canon");
+    const planPath = flag("plan");
+    if (!documentPath || !canonId || !planPath) {
+      process.stderr.write(
+        "usage: tastepilot render --document <json> --canon <id> --plan <json> [--out <dir>]\n",
+      );
+      return 1;
+    }
+    const outDir = flag("out") ?? join("output", "publication");
+
+    const { readFile } = await import("node:fs/promises");
+    const { deserializeDocument } = await import("../semantic/serialize.js");
+    const { loadCanon } = await import("../canon/index.js");
+    const { validatePlanAgainstDocument } = await import("../art-direction/index.js");
+    const { renderPublication } = await import("../renderer/index.js");
+
+    const doc = deserializeDocument(await readFile(documentPath, "utf8"));
+    const canon = await loadCanon(canonId);
+    const planResult = validatePlanAgainstDocument(
+      JSON.parse(await readFile(planPath, "utf8")),
+      doc,
+    );
+    if (!planResult.ok || !planResult.plan) {
+      process.stderr.write("Art Direction Plan is invalid:\n");
+      for (const err of planResult.errors) process.stderr.write(`  - ${err}\n`);
+      return 1;
+    }
+    const result = await renderPublication(
+      { document: doc, canon, plan: planResult.plan },
+      outDir,
+    );
+    process.stdout.write(`✓ Publication rendered to ${result.outDir}/\n`);
+    process.stdout.write(`  ${result.files.join(" · ")}\n`);
+    process.stdout.write(`  Preview: open ${join(result.outDir, "index.html")}\n`);
+    return 0;
+  }
+
+  if (command === "canons") {
+    const { listCanons } = await import("../canon/index.js");
+    const canons = await listCanons();
+    for (const canon of canons) {
+      process.stdout.write(
+        `${canon.id.padEnd(22)} ${canon.version.padEnd(8)} ${canon.source.padEnd(10)} ${canon.description}\n`,
+      );
+    }
     return 0;
   }
 
