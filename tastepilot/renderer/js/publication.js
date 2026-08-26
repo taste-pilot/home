@@ -50,14 +50,20 @@
     var observer = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
+          // Reveal when entering the viewport — and also when fast scrolling
+          // has jumped past an element: content must never stay invisible.
+          var passed = entry.boundingClientRect.bottom < 0;
+          if (entry.isIntersecting || passed) {
             entry.target.classList.add("motion-revealed");
             entry.target.classList.remove("motion-hidden");
             observer.unobserve(entry.target);
           }
         });
       },
-      { rootMargin: "0px 0px -8% 0px" },
+      // The huge top margin makes anything already scrolled past count as
+      // intersecting, so an instant scroll jump can never strand hidden
+      // content above the viewport.
+      { rootMargin: "20000px 0px -8% 0px" },
     );
     targets.forEach(function (el) { observer.observe(el); });
   }

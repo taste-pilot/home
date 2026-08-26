@@ -33,7 +33,7 @@ export async function renderPublication(
   const { document: doc, canon, plan } = inputs;
 
   const html = buildHtml(inputs);
-  const css = tokensCss(canon) + "\n" + (await baseCss());
+  const css = tokensCss(canon) + "\n" + (await baseCss()) + silhouetteCss(inputs);
 
   await mkdir(join(outDir, "assets"), { recursive: true });
   await writeFile(join(outDir, "index.html"), html, "utf8");
@@ -69,6 +69,35 @@ let baseCssCache: string | undefined;
 async function baseCss(): Promise<string> {
   baseCssCache ??= await readFile(rendererAsset("css", "base.css"), "utf8");
   return baseCssCache;
+}
+
+/**
+ * Text flows around the visible silhouette of transparent artwork where the
+ * plan asks for it AND a real asset exists. Rules are generated here — by the
+ * deterministic renderer from approved primitives — never by the AI. Browsers
+ * without shape support fall back to the rectangular float.
+ */
+function silhouetteCss(inputs: RenderInputs): string {
+  const rules: string[] = [];
+  for (const section of inputs.plan.sections) {
+    for (const art of section.artwork) {
+      const file = inputs.artworkFiles?.get(art.id);
+      if (!file || art.wrap !== "silhouette") continue;
+      if (art.placement !== "left" && art.placement !== "right") continue;
+      rules.push(
+        [
+          `@media (min-width: 900px) {`,
+          `  figure[data-artwork-id="${art.id}"] {`,
+          `    shape-outside: url("${file.replace(/"/g, "%22")}");`,
+          `    shape-image-threshold: 0.15;`,
+          `    shape-margin: 1.1rem;`,
+          `  }`,
+          `}`,
+        ].join("\n"),
+      );
+    }
+  }
+  return rules.length > 0 ? "\n/* silhouette wrapping */\n" + rules.join("\n") + "\n" : "";
 }
 
 function buildHtml(inputs: RenderInputs): string {
