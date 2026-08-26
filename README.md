@@ -15,9 +15,11 @@ Turn writing into publications worth reading.
 
 ---
 
-> 🚧 **Status: v0.1 engine under construction.** This README describes the launch product. The Skilllet folder, five starter Canons, and the three-style demo land here milestone by milestone — star or watch the repo to follow along.
+> 🚧 **Status: v0.1 nearly there.** Ingestion, the five starter Canons, the Art Direction contract, the deterministic renderer, drop caps, Light/Dark/Auto, durable artwork, URL + Brand DNA, print/PDF, visual QA, and the three-Canon demo are all in. Canon tooling and final packaging remain — star or watch to follow along.
 
-<!-- v0.1: replace with the three-Canon demo screenshot strip (same document, same artwork, three Canons) -->
+![The same document and the same artwork rendered through Modern Editorial, Literary Classic, and Swiss Clean](site/assets/demo-strip.png)
+
+<p align="center"><em>One document. One set of artwork. Three Canons. <a href="https://tastepilot.org/#demo">See it live</a> or <a href="examples/demo/">inspect the output</a>.</em></p>
 
 ## What is TastePilot?
 
@@ -159,7 +161,9 @@ Standalone HTML export is fundamental. Hosted anything is optional. **No lock-in
 
 ## The demo
 
-Coming with v0.1: one 2,500-word document and one persistent set of artwork, rendered through **Modern Editorial → Literary Classic → Swiss Clean** — three radically different publications from the same words and the same assets. Live at [tastepilot.org](https://tastepilot.org), with full inspectable output in [`examples/demo/`](examples/).
+One ~2,000-word document and one persistent set of artwork, rendered through **Modern Editorial → Literary Classic → Swiss Clean** — three radically different publications from the same words and the same assets, each with its own composed PDF edition. The build script asserts the Semantic Document and Artwork Manifest are byte-identical across all three runs.
+
+Live at [tastepilot.org](https://tastepilot.org/#demo) · inspectable output in [`examples/demo/`](examples/demo/) · rebuilt with `pnpm demo`.
 
 ## Roadmap
 

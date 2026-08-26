@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "attention-lamp",
+      "sectionId": "the-anatomy-of-attention",
+      "purpose": "right artwork for section \"the-anatomy-of-attention\"",
+      "prompt": "A reading lamp casting warm light over an open book — transparent editorial line art.",
+      "status": "available",
+      "approved": false,
+      "regenerate": false,
+      "file": "attention-lamp.svg",
+      "provider": "existing-asset"
+    },
+    {
+      "id": "decisions-compass",
+      "sectionId": "the-five-decisions",
+      "purpose": "left artwork for section \"the-five-decisions\"",
+      "prompt": "A drafting compass drawing an arc — transparent editorial line art.",
+      "status": "available",
+      "approved": false,
+      "regenerate": false,
+      "file": "decisions-compass.svg",
+      "provider": "existing-asset"
+    }
+  ]
+}

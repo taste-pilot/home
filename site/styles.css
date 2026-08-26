@@ -230,23 +230,23 @@ main h2 { font-size: clamp(1.5rem, 3.4vw, 2.1rem); margin-bottom: 1.2rem; }
 
 /* ---------- demo ---------- */
 
-.demo { text-align: center; }
-.demo-lede { color: var(--ink-soft); margin-bottom: 1.75rem; }
-.demo-frame {
-  border: 1px dashed var(--rule);
+.demo { text-align: center; max-width: 56rem; }
+.demo-lede { color: var(--ink-soft); margin-bottom: 1.5rem; }
+.demo-frame--live {
+  border: 1px solid var(--rule);
   border-radius: 12px;
+  overflow: hidden;
   background: var(--panel);
-  padding: 3.5rem 1.5rem;
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.9rem;
 }
-.demo-placeholder-label {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
+.demo-frame--live iframe {
+  display: block;
+  width: 100%;
+  height: min(72vh, 640px);
+  border: 0;
 }
-.demo-placeholder-sub { color: var(--ink-soft); font-size: 0.92rem; max-width: 30rem; margin: 0 auto; }
-.demo-switch { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+.demo-links { font-size: 0.88rem; color: var(--ink-soft); }
+.demo-switch { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.1rem; }
 .demo-switch button {
   font: inherit;
   font-size: 0.85rem;
@@ -256,8 +256,14 @@ main h2 { font-size: clamp(1.5rem, 3.4vw, 2.1rem); margin-bottom: 1.2rem; }
   border: 1px solid var(--rule);
   background: transparent;
   color: var(--ink-soft);
+  cursor: pointer;
 }
-.demo-switch button:disabled { opacity: 0.55; cursor: default; }
+.demo-switch button:hover { border-color: var(--accent); color: var(--accent); }
+.demo-switch button[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
 
 /* ---------- canon ---------- */
 

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="520" viewBox="0 0 400 520" role="img" aria-label="A drafting compass drawing an arc">
+  <g fill="none" stroke="#8a7d6d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- pivot head -->
+    <circle cx="200" cy="90" r="22"/>
+    <path d="M200 68 L200 40"/>
+    <circle cx="200" cy="34" r="7" stroke="#a4491f"/>
+    <!-- legs -->
+    <path d="M188 108 L120 400"/>
+    <path d="M212 108 L286 386"/>
+    <!-- needle and lead -->
+    <path d="M120 400 L112 436"/>
+    <path d="M286 386 L300 424" stroke="#a4491f"/>
+    <!-- hinge detail -->
+    <path d="M178 150 Q200 162 222 150" stroke-width="3"/>
+  </g>
+  <!-- drawn arc -->
+  <path d="M92 452 Q200 500 312 440" fill="none" stroke="#a4491f" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 14"/>
+  <!-- accent points on the arc -->
+  <g fill="#a4491f">
+    <circle cx="112" cy="443" r="5"/>
+    <circle cx="300" cy="431" r="5"/>
+  </g>
+</svg>

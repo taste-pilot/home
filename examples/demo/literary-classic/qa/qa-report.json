@@ -1,0 +1,10 @@
+{
+  "pass": true,
+  "failures": [],
+  "warnings": [],
+  "screenshots": [
+    "/Users/davidsparrow/Documents/_appDevelopment/Dev/tastepilot/home/examples/demo/literary-classic/qa/desktop.png",
+    "/Users/davidsparrow/Documents/_appDevelopment/Dev/tastepilot/home/examples/demo/literary-classic/qa/tablet.png",
+    "/Users/davidsparrow/Documents/_appDevelopment/Dev/tastepilot/home/examples/demo/literary-classic/qa/mobile.png"
+  ]
+}

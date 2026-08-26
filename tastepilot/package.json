@@ -1,7 +1,7 @@
 {
   "name": "tastepilot",
   "version": "0.1.0",
-  "description": "Editorial Intelligence for AI agents — turn writing into art-directed HTML publications and print-ready PDFs.",
+  "description": "Editorial Intelligence for AI agents \u2014 turn writing into art-directed HTML publications and print-ready PDFs.",
   "license": "MIT",
   "type": "module",
   "engines": {
@@ -18,7 +18,8 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "demo": "tsx scripts/build-demo.ts"
   },
   "dependencies": {
     "cheerio": "^1.2.0",

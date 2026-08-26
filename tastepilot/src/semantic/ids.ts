@@ -5,14 +5,18 @@
  */
 
 export function slugify(text: string, maxLength = 40): string {
-  const slug = text
+  const full = text
     .toLowerCase()
     .normalize("NFKD")
     .replace(/[̀-ͯ]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, maxLength)
-    .replace(/-+$/g, "");
+    .replace(/^-+|-+$/g, "");
+  let slug = full;
+  if (full.length > maxLength) {
+    // Cut at a word boundary, never mid-word.
+    slug = full.slice(0, maxLength).replace(/-[^-]*$/, "");
+  }
+  slug = slug.replace(/-+$/g, "");
   return slug.length > 0 ? slug : "untitled";
 }
 

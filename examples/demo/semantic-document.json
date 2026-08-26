@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 1,
+  "metadata": {
+    "title": "The Field Guide to Work That Gets Read",
+    "subtitle": "",
+    "author": "",
+    "language": "en"
+  },
+  "source": {
+    "type": "markdown",
+    "location": "./source.md"
+  },
+  "sections": [
+    {
+      "id": "section-1",
+      "blocks": [
+        {
+          "id": "section-1-paragraph-1",
+          "type": "paragraph",
+          "content": {
+            "text": "You finished the writing. The research is solid, the argument lands, and the\ndraft says exactly what you meant it to say. Then you export it, look at the\nresult, and feel the air go out of the room. A wall of grey text. A document\nthat whispers skip me to every reader it meets. This guide is about the\ndistance between those two moments — between writing something worth reading\nand presenting something that gets read — and how to close it without\nbecoming a designer.",
+            "links": [],
+            "marks": [
+              {
+                "start": 245,
+                "end": 252,
+                "kind": "em"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "why-presentation-decides-what-happens",
+      "heading": "Why presentation decides what happens next",
+      "blocks": [
+        {
+          "id": "why-presentation-decides-what-happens-paragraph-1",
+          "type": "paragraph",
+          "content": {
+            "text": "Nobody reads a document before deciding whether to read it. The decision\nhappens earlier, in a glance that lasts a breath, and it is made almost\nentirely on visual evidence. Hierarchy, margins, rhythm, restraint: readers\ncannot name these things, but they respond to all of them.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "why-presentation-decides-what-happens-paragraph-2",
+          "type": "paragraph",
+          "content": {
+            "text": "The numbers are blunt about it.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "why-presentation-decides-what-happens-paragraph-3",
+          "type": "statistic",
+          "value": "38%",
+          "label": "of readers say they abandon long documents that are \"hard to look at\" before finishing the first section"
+        },
+        {
+          "id": "why-presentation-decides-what-happens-paragraph-4",
+          "type": "statistic",
+          "value": "4 seconds",
+          "label": "the average time before a reader first scrolls a long-form page, deciding its fate from appearance alone"
+        },
+        {
+          "id": "why-presentation-decides-what-happens-paragraph-5",
+          "type": "paragraph",
+          "content": {
+            "text": "A document that looks considered earns consideration. A document that looks\nlike a data dump gets treated like one, no matter how good the sentences are.\nThat asymmetry feels unfair to writers, and it is. It is also the single\ncheapest thing to fix in your entire publishing process.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "why-presentation-decides-what-happens-quote-6",
+          "type": "quote",
+          "content": {
+            "text": "People remember the argument. They never remember the grid that carried it —\nand that is exactly how you know the grid worked.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "why-presentation-decides-what-happens-paragraph-7",
+          "type": "paragraph",
+          "content": {
+            "text": "The craft that closes the gap is editorial design: the accumulated judgment of\na century of magazines, journals, and books about how reading is supposed to\nfeel. It has rules. The rules are learnable. Better still, they are borrowable.",
+            "links": [],
+            "marks": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-anatomy-of-attention",
+      "heading": "The anatomy of attention",
+      "blocks": [
+        {
+          "id": "the-anatomy-of-attention-paragraph-1",
+          "type": "paragraph",
+          "content": {
+            "text": "Attention is a budget, and every element on the page spends from it. The\npublications that feel effortless are the ones that spend deliberately.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "the-anatomy-of-attention-paragraph-2",
+          "type": "paragraph",
+          "content": {
+            "text": "Three mechanisms do most of the work.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "the-anatomy-of-attention-heading-3",
+          "type": "heading",
+          "level": 3,
+          "content": {
+            "text": "Hierarchy",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "the-anatomy-of-attention-paragraph-4",
+          "type": "paragraph",
+          "content": {
+            "text": "The reader's eye should know where to land before the reader knows they are\nlooking. Title, section opener, body, aside: each level gets one consistent\ntreatment, and the levels differ enough that no one ever has to think about\nthem. When everything shouts, everything is noise.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "the-anatomy-of-attention-heading-5",
+          "type": "heading",
+          "level": 3,
+          "content": {
+            "text": "Measure",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "the-anatomy-of-attention-paragraph-6",
+          "type": "paragraph",
+          "content": {
+            "text": "Lines that run too long exhaust the eye on the return trip. Book designers\nsettled on sixty to seventy characters per line generations ago, and no\nscreen, phone, or format change has moved the number since. Constraining the\ncolumn is the single most powerful improvement most documents will ever\nreceive.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "the-anatomy-of-attention-heading-7",
+          "type": "heading",
+          "level": 3,
+          "content": {
+            "text": "Rhythm",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "the-anatomy-of-attention-paragraph-8",
+          "type": "paragraph",
+          "content": {
+            "text": "Dense passages need relief. A pull quote, a statistic given room to breathe,\nan illustration leaning into the margin — these are pacing devices, not\ndecoration. They tell the reader you may rest here and then return them to\nthe text refreshed. A publication with no quiet sections has no loud ones\neither: contrast is the whole instrument.",
+            "links": [],
+            "marks": [
+              {
+                "start": 182,
+                "end": 199,
+                "kind": "em"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "the-five-decisions",
+      "heading": "The five decisions",
+      "blocks": [
+        {
+          "id": "the-five-decisions-paragraph-1",
+          "type": "paragraph",
+          "content": {
+            "text": "Every well-made publication, from a zine to a journal, is the product of the\nsame five decisions made in the same order.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "the-five-decisions-list-2",
+          "type": "list",
+          "ordered": true,
+          "items": [
+            {
+              "text": "Read the whole piece once without touching anything. You cannot pace what\nyou have not felt.",
+              "links": [],
+              "marks": []
+            },
+            {
+              "text": "Find the natural sections and the single idea each one carries. If a\nsection carries three ideas, it is three sections.",
+              "links": [],
+              "marks": []
+            },
+            {
+              "text": "Choose the moments that deserve visual emphasis — at most one per section.\nThe statistic that stops you. The sentence you would quote to a friend.",
+              "links": [],
+              "marks": []
+            },
+            {
+              "text": "Pick one coherent style and stay inside it. Consistency reads as\nconfidence; novelty per page reads as chaos.",
+              "links": [],
+              "marks": []
+            },
+            {
+              "text": "Compose, then review on a desktop, on a phone, and in print. Three\ndifferent readers live at those three sizes.",
+              "links": [],
+              "marks": []
+            }
+          ]
+        },
+        {
+          "id": "the-five-decisions-paragraph-3",
+          "type": "paragraph",
+          "content": {
+            "text": "Notice what is absent from the list: software skills, color theory, a fonts\nfolder with four hundred entries. The decisions are editorial, not technical.\nTaste is knowing which moments matter. Everything after that is execution.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "the-five-decisions-paragraph-4",
+          "type": "callout",
+          "content": {
+            "text": "Every section gets at most one visual event. If two moments in a section both feel essential, the section wants to be two sections. This rule alone prevents most amateur-looking documents.",
+            "links": [],
+            "marks": []
+          },
+          "title": "The one-per-section rule"
+        }
+      ]
+    },
+    {
+      "id": "common-failures-and-what-they-cost",
+      "heading": "Common failures, and what they cost",
+      "blocks": [
+        {
+          "id": "common-failures-and-what-they-cost-paragraph-1",
+          "type": "paragraph",
+          "content": {
+            "text": "The same handful of mistakes account for nearly every document that looks\nhomemade. All of them are cheap to avoid once named.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "common-failures-and-what-they-cost-table-2",
+          "type": "table",
+          "header": [
+            "Failure",
+            "What the reader experiences",
+            "The fix"
+          ],
+          "rows": [
+            [
+              "No hierarchy",
+              "Everything shouts at the same volume",
+              "One scale, applied consistently"
+            ],
+            [
+              "Endless measure",
+              "The eye loses the line on every return",
+              "Constrain the column"
+            ],
+            [
+              "Ornament everywhere",
+              "Fatigue, then distrust",
+              "Cut anything without a job"
+            ],
+            [
+              "Center-aligned body text",
+              "Ragged starts exhaust the reader",
+              "Center display, not paragraphs"
+            ],
+            [
+              "Screenshot PDFs",
+              "Broken pages and microscopic type",
+              "Compose print as its own edition"
+            ]
+          ]
+        },
+        {
+          "id": "common-failures-and-what-they-cost-paragraph-3",
+          "type": "paragraph",
+          "content": {
+            "text": "The last one deserves a special word. Exporting a webpage to PDF by printing\nit is not publishing; it is photocopying. A real print edition makes its own\ndecisions — where pages break, how figures sit, what the margins hold — and\nreaders can feel the difference before the first page turn.",
+            "links": [],
+            "marks": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "what-restraint-buys-you",
+      "heading": "What restraint buys you",
+      "blocks": [
+        {
+          "id": "what-restraint-buys-you-paragraph-1",
+          "type": "paragraph",
+          "content": {
+            "text": "Here is the counterintuitive part: the strongest tool in the entire editorial\nkit is the decision to do nothing.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "what-restraint-buys-you-paragraph-2",
+          "type": "paragraph",
+          "content": {
+            "text": "Empty margin is not wasted space. It is the frame that makes the picture\nlegible. The quiet section after a loud one is not missing content; it is what\nmakes the loud section loud. When a spread feels wrong and you cannot say why,\nthe answer is almost never add something.",
+            "links": [],
+            "marks": [
+              {
+                "start": 258,
+                "end": 271,
+                "kind": "em"
+              }
+            ]
+          }
+        },
+        {
+          "id": "what-restraint-buys-you-paragraph-3",
+          "type": "statistic",
+          "value": "2×",
+          "label": "how much more often documents with clear visual hierarchy are shared, compared with unformatted versions of the same content"
+        },
+        {
+          "id": "what-restraint-buys-you-paragraph-4",
+          "type": "paragraph",
+          "content": {
+            "text": "Restraint is also what separates borrowed taste from imitated taste. Anyone\ncan copy a beautiful publication's fonts. What made it beautiful was the\njudgment about when to use them at full volume and when to whisper — and that\njudgment transfers to any document, in any style, forever.",
+            "links": [],
+            "marks": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "where-to-start-tomorrow",
+      "heading": "Where to start tomorrow",
+      "blocks": [
+        {
+          "id": "where-to-start-tomorrow-paragraph-1",
+          "type": "paragraph",
+          "content": {
+            "text": "Do not redesign everything you have ever published. Pick the one document\nthat earns its keep — the guide people actually download, the piece you send\nto every new client — and give it the five decisions. One coherent style. One\nconstrained column. One visual event per section. A real print edition.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "where-to-start-tomorrow-paragraph-2",
+          "type": "paragraph",
+          "content": {
+            "text": "Then put it next to the old version and look at both the way a stranger\nwould, for four seconds each.",
+            "links": [],
+            "marks": []
+          }
+        },
+        {
+          "id": "where-to-start-tomorrow-paragraph-3",
+          "type": "callout",
+          "content": {
+            "text": "You do not need to become a designer. You need your writing to be treated the way it deserves. Those are different problems, and the second one is now the easy one.",
+            "links": [],
+            "marks": []
+          },
+          "title": "Remember"
+        },
+        {
+          "id": "where-to-start-tomorrow-paragraph-4",
+          "type": "paragraph",
+          "content": {
+            "text": "The writers whose work travels are not the ones who learned design software.\nThey are the ones who understood, a little earlier than everyone else, that\npresentation is part of the argument — and then found the tools that let the\nwriting stay the point.",
+            "links": [],
+            "marks": []
+          }
+        }
+      ]
+    }
+  ]
+}
