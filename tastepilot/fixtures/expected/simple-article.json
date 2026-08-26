@@ -19,7 +19,8 @@
           "type": "paragraph",
           "content": {
             "text": "Reading is the last unhurried act. In a landscape engineered for the glance, a\nperson who reads a full essay start to finish is performing a small rebellion.",
-            "links": []
+            "links": [],
+            "marks": []
           }
         }
       ]
@@ -33,7 +34,8 @@
           "type": "paragraph",
           "content": {
             "text": "A line of text that runs too long tires the eye before the idea lands. Classical\nbook designers settled on sixty to seventy characters per line, and the figure\nhas survived every change of medium since.",
-            "links": []
+            "links": [],
+            "marks": []
           }
         },
         {
@@ -41,7 +43,8 @@
           "type": "quote",
           "content": {
             "text": "The page is a unit of attention, not a unit of paper.",
-            "links": []
+            "links": [],
+            "marks": []
           }
         },
         {
@@ -49,9 +52,21 @@
           "type": "list",
           "ordered": false,
           "items": [
-            { "text": "Short lines feel brisk and journalistic.", "links": [] },
-            { "text": "Long lines feel scholarly, then simply exhausting.", "links": [] },
-            { "text": "The right measure disappears entirely.", "links": [] }
+            {
+              "text": "Short lines feel brisk and journalistic.",
+              "links": [],
+              "marks": []
+            },
+            {
+              "text": "Long lines feel scholarly, then simply exhausting.",
+              "links": [],
+              "marks": []
+            },
+            {
+              "text": "The right measure disappears entirely.",
+              "links": [],
+              "marks": []
+            }
           ]
         }
       ]
@@ -65,7 +80,8 @@
           "type": "paragraph",
           "content": {
             "text": "Good editorial design is invisible. The reader remembers the argument, not the\ngrid. That invisibility is the craft.",
-            "links": []
+            "links": [],
+            "marks": []
           }
         }
       ]

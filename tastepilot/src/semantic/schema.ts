@@ -32,8 +32,9 @@ export const ImageAssetSchema = z
   .strict();
 
 /**
- * Inline content is stored as plain text plus optional link annotations.
- * Prose is sacred: `text` must survive ingestion byte-identical.
+ * Inline content is stored as plain text plus link and mark annotations over
+ * character offsets. Prose is sacred: `text` must survive ingestion intact,
+ * and the author's emphasis is content, not styling — so it lives here too.
  */
 export const InlineTextSchema = z
   .object({
@@ -46,6 +47,17 @@ export const InlineTextSchema = z
             start: z.number().int().nonnegative(),
             end: z.number().int().nonnegative(),
             href: z.string().min(1),
+          })
+          .strict(),
+      )
+      .default([]),
+    marks: z
+      .array(
+        z
+          .object({
+            start: z.number().int().nonnegative(),
+            end: z.number().int().nonnegative(),
+            kind: z.enum(["em", "strong", "code"]),
           })
           .strict(),
       )
@@ -148,6 +160,16 @@ export const DividerBlockSchema = z
   })
   .strict();
 
+export const CodeBlockSchema = z
+  .object({
+    ...blockBase,
+    type: z.literal("code"),
+    language: z.string().optional(),
+    /** Verbatim code text — never reformatted. */
+    text: z.string(),
+  })
+  .strict();
+
 export const ButtonBlockSchema = z
   .object({
     ...blockBase,
@@ -168,6 +190,7 @@ export const ContentBlockSchema = z.discriminatedUnion("type", [
   CaptionBlockSchema,
   TableBlockSchema,
   DividerBlockSchema,
+  CodeBlockSchema,
   ButtonBlockSchema,
 ]);
 
