@@ -1,5 +1,7 @@
 export * from "./schema.js";
 export { applyBrandDna, type SourceTreatment } from "./resolve.js";
+export { validateCanon, type CanonValidationResult } from "./validate.js";
+export { LocalCanonRegistry, type CanonRegistry } from "./registry.js";
 export {
   CanonResolver,
   bundledCanonSource,

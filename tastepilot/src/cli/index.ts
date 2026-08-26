@@ -208,6 +208,70 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
     return report.pass ? 0 : 1;
   }
 
+  if (command === "canon") {
+    const [sub, target] = rest;
+    const { validateCanon } = await import("../canon/index.js");
+
+    if (sub === "validate") {
+      if (!target) {
+        process.stderr.write("usage: tastepilot canon validate <path/to/canon-folder>\n");
+        return 1;
+      }
+      const result = await validateCanon(target);
+      if (!result.ok) {
+        process.stdout.write(`✗ ${target} is not a valid canon:\n`);
+        for (const err of result.errors) process.stdout.write(`  - ${err}\n`);
+        return 1;
+      }
+      process.stdout.write(
+        `✓ ${result.style!.manifest.name} (${result.style!.manifest.id}@${result.style!.manifest.version}) is valid\n`,
+      );
+      return 0;
+    }
+
+    if (sub === "install") {
+      if (!target) {
+        process.stderr.write("usage: tastepilot canon install <path/to/canon-folder>\n");
+        return 1;
+      }
+      const result = await validateCanon(target);
+      if (!result.ok) {
+        process.stdout.write(`✗ refusing to install an invalid canon:\n`);
+        for (const err of result.errors) process.stdout.write(`  - ${err}\n`);
+        return 1;
+      }
+      const { cp } = await import("node:fs/promises");
+      const { dirname: pdir, join: pjoin } = await import("node:path");
+      const { fileURLToPath } = await import("node:url");
+      const installed = pjoin(
+        pdir(fileURLToPath(import.meta.url)),
+        "..",
+        "..",
+        "canon",
+        "installed",
+        result.style!.manifest.id,
+      );
+      await cp(target, installed, { recursive: true });
+      process.stdout.write(
+        `✓ installed ${result.style!.manifest.id} — now listed as a "local" canon source\n`,
+      );
+      return 0;
+    }
+
+    if (sub === "list") {
+      const { listCanons } = await import("../canon/index.js");
+      for (const canon of await listCanons()) {
+        process.stdout.write(
+          `${canon.id.padEnd(22)} ${canon.version.padEnd(8)} ${canon.source.padEnd(10)} ${canon.description}\n`,
+        );
+      }
+      return 0;
+    }
+
+    process.stderr.write("usage: tastepilot canon validate|install <dir> | canon list\n");
+    return 1;
+  }
+
   if (command === "canons") {
     const { listCanons } = await import("../canon/index.js");
     const canons = await listCanons();
