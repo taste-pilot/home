@@ -68,16 +68,21 @@ Do not rewrite my content.</code></pre>
 
   <section class="demo" id="demo">
     <h2>Same words. Art-directed.</h2>
-    <p class="demo-lede">One document. One set of artwork. Three radically different publications.</p>
-    <div class="demo-frame" data-demo-placeholder>
-      <p class="demo-placeholder-label">Live demo shipping with v0.1</p>
-      <p class="demo-placeholder-sub">The same 2,500-word guide rendered through three Canons — content permanent, artwork durable, design disposable.</p>
-    </div>
+    <p class="demo-lede">One document. One set of artwork. Three radically different publications — switch the style and watch the words stay put.</p>
     <div class="demo-switch" role="group" aria-label="Canon style">
-      <button type="button" disabled>Modern Editorial</button>
-      <button type="button" disabled>Literary Classic</button>
-      <button type="button" disabled>Swiss Clean</button>
+      <button type="button" data-demo-src="demo/before/index.html">The raw draft</button>
+      <button type="button" data-demo-src="demo/modern-editorial/index.html" aria-pressed="true">Modern Editorial</button>
+      <button type="button" data-demo-src="demo/literary-classic/index.html">Literary Classic</button>
+      <button type="button" data-demo-src="demo/swiss-clean/index.html">Swiss Clean</button>
     </div>
+    <div class="demo-frame demo-frame--live">
+      <iframe id="demo-iframe" src="demo/modern-editorial/index.html" title="TastePilot demo publication" loading="lazy"></iframe>
+    </div>
+    <p class="demo-links">
+      <a href="demo/modern-editorial/index.html">Read the full publication</a> ·
+      <a href="demo/modern-editorial/publication.pdf">View its PDF edition</a> ·
+      <a href="https://github.com/taste-pilot/home/tree/main/examples/demo">Inspect the guts on GitHub</a>
+    </p>
   </section>
 
   <section class="canon" id="canon">

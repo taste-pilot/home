@@ -1,3 +1,54 @@
+:root {
+  --paper: #f8f4ea;
+  --ink: #2b2620;
+  --ink-soft: #6b5f4e;
+  --accent: #7a3b2e;
+  --rule: #e5dcc8;
+  --panel: #f1ead9;
+  --code-bg: #2b2620;
+  --code-ink: #f1ead9;
+  --font-title: "EB Garamond", Georgia, "Times New Roman", serif;
+  --font-heading: "EB Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "EB Garamond", Georgia, "Times New Roman", serif;
+  --font-utility: "EB Garamond", Georgia, "Times New Roman", serif;
+  --size-base: 1.125rem;
+  --size-small: 0.9rem;
+  --size-h3: 1.406rem;
+  --size-h2: 1.758rem;
+  --size-title: 2.747rem;
+  --size-statistic: 2.197rem;
+  --leading-body: 1.6;
+  --leading-heading: 1.15;
+  --measure: 62ch;
+  --space-block: 1.5rem;
+  --space-section: 4rem;
+  --radius: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #1b1712;
+    --ink: #e8ddc8;
+    --ink-soft: #a3927a;
+    --accent: #c98263;
+    --rule: #383025;
+    --panel: #241f18;
+    --code-bg: #12100c;
+    --code-ink: #d8cdb8;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #1b1712;
+  --ink: #e8ddc8;
+  --ink-soft: #a3927a;
+  --accent: #c98263;
+  --rule: #383025;
+  --panel: #241f18;
+  --code-bg: #12100c;
+  --code-ink: #d8cdb8;
+}
+
 /* TastePilot publication — structural CSS.
    All canon-specific values arrive as custom properties (see tokens block
    above). One renderer, many canons: variation happens through tokens and
@@ -412,4 +463,68 @@ p code, li code {
 @media print {
   .theme-control { display: none !important; }
   body { background: #ffffff; }
+}
+
+/* silhouette wrapping */
+@media (min-width: 900px) {
+  figure[data-artwork-id="attention-lamp"] {
+    shape-outside: url("assets/attention-lamp.svg");
+    shape-image-threshold: 0.15;
+    shape-margin: 1.1rem;
+  }
+}
+@media (min-width: 900px) {
+  figure[data-artwork-id="decisions-compass"] {
+    shape-outside: url("assets/decisions-compass.svg");
+    shape-image-threshold: 0.15;
+    shape-margin: 1.1rem;
+  }
+}
+
+/* print composition */
+@page {
+  size: letter;
+}
+
+@media print {
+  /* Print always uses the light palette, whatever the reader chose on screen. */
+  :root, :root[data-theme="dark"] {
+    --paper: #f8f4ea;
+    --ink: #2b2620;
+    --ink-soft: #6b5f4e;
+    --accent: #7a3b2e;
+    --rule: #e5dcc8;
+    --panel: #f1ead9;
+    --code-bg: #2b2620;
+    --code-ink: #f1ead9;
+  }
+
+  html { background: #ffffff; }
+  body {
+    background: var(--paper);
+    font-size: calc(var(--size-base) * 1);
+  }
+
+  /* Nothing animates, nothing stays hidden, nothing sticks. */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .motion-hidden { opacity: 1 !important; transform: none !important; }
+  .theme-control { display: none !important; }
+
+  /* Sensible page breaks. */
+  p { orphans: 3; widows: 3; }
+  h2, h3, h4, .section-heading { break-after: avoid; }
+  figure, blockquote, table, .callout, .statistic, .code, .art, .pull-quote {
+    break-inside: avoid;
+  }
+  .caption { break-before: avoid; }
+  .image { break-inside: avoid; }
+
+  /* Print-safe treatment. */
+  a { color: inherit; }
+  .pub-header { padding-top: 0; }
+  .table-wrap { overflow: visible; }
+  .code { white-space: pre-wrap; word-break: break-word; }
 }

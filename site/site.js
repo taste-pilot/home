@@ -1,4 +1,19 @@
-// TastePilot site — theme control only. The page works fully without this script.
+// TastePilot site — theme control + demo switcher. The page works without JS
+// (the iframe simply shows Modern Editorial and the buttons do nothing).
+(function () {
+  var iframe = document.getElementById("demo-iframe");
+  var buttons = document.querySelectorAll("[data-demo-src]");
+  if (iframe) {
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        iframe.src = b.getAttribute("data-demo-src");
+        buttons.forEach(function (other) {
+          other.setAttribute("aria-pressed", String(other === b));
+        });
+      });
+    });
+  }
+})();
 (function () {
   var KEY = "tastepilot-theme";
   var root = document.documentElement;

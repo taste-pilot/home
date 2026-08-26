@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "style": "modern-editorial",
+  "artDensity": "medium",
+  "motion": "gentle",
+  "sections": [
+    {
+      "sectionId": "section-1",
+      "composition": "opening-editorial",
+      "dropCap": "classic-5",
+      "artwork": [],
+      "pullQuotes": [],
+      "statistics": [],
+      "callouts": []
+    },
+    {
+      "sectionId": "why-presentation-decides-what-happens",
+      "composition": "statistic-break",
+      "artwork": [],
+      "pullQuotes": [
+        {
+          "blockId": "why-presentation-decides-what-happens-quote-6"
+        }
+      ],
+      "statistics": [
+        {
+          "blockId": "why-presentation-decides-what-happens-paragraph-3",
+          "treatment": "oversized"
+        },
+        {
+          "blockId": "why-presentation-decides-what-happens-paragraph-4",
+          "treatment": "oversized"
+        }
+      ],
+      "callouts": []
+    },
+    {
+      "sectionId": "the-anatomy-of-attention",
+      "composition": "margin-art-right",
+      "artwork": [
+        {
+          "id": "attention-lamp",
+          "placement": "right",
+          "wrap": "silhouette",
+          "size": "medium",
+          "brief": "A reading lamp casting warm light over an open book — transparent editorial line art."
+        }
+      ],
+      "pullQuotes": [],
+      "statistics": [],
+      "callouts": []
+    },
+    {
+      "sectionId": "the-five-decisions",
+      "composition": "margin-art-left",
+      "artwork": [
+        {
+          "id": "decisions-compass",
+          "placement": "left",
+          "wrap": "silhouette",
+          "size": "medium",
+          "brief": "A drafting compass drawing an arc — transparent editorial line art."
+        }
+      ],
+      "pullQuotes": [],
+      "statistics": [],
+      "callouts": [
+        {
+          "blockId": "the-five-decisions-paragraph-4",
+          "treatment": "panel"
+        }
+      ]
+    },
+    {
+      "sectionId": "common-failures-and-what-they-cost",
+      "composition": "diagram-section",
+      "artwork": [],
+      "pullQuotes": [],
+      "statistics": [],
+      "callouts": []
+    },
+    {
+      "sectionId": "what-restraint-buys-you",
+      "composition": "quiet-section",
+      "artwork": [],
+      "pullQuotes": [],
+      "statistics": [
+        {
+          "blockId": "what-restraint-buys-you-paragraph-3",
+          "treatment": "panel"
+        }
+      ],
+      "callouts": []
+    },
+    {
+      "sectionId": "where-to-start-tomorrow",
+      "composition": "standard",
+      "artwork": [],
+      "pullQuotes": [],
+      "statistics": [],
+      "callouts": [
+        {
+          "blockId": "where-to-start-tomorrow-paragraph-3",
+          "treatment": "panel"
+        }
+      ]
+    }
+  ]
+}

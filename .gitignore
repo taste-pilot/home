@@ -6,3 +6,5 @@ blob-report/
 dist/
 *.log
 .DS_Store
+examples/demo/**/qa/*.png
+site/_strip.html

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="520" viewBox="0 0 420 520" role="img" aria-label="A reading lamp casting light over an open book">
+  <g fill="none" stroke="#8a7d6d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- lamp base -->
+    <ellipse cx="150" cy="470" rx="80" ry="16"/>
+    <!-- arm -->
+    <path d="M150 466 L150 380 Q150 340 190 310 L250 260"/>
+    <path d="M250 260 Q270 245 288 258"/>
+    <!-- shade -->
+    <path d="M288 258 L352 194 Q332 150 288 132 L226 196 Q252 240 288 258 Z" stroke="#a4491f"/>
+    <!-- bulb glow -->
+    <circle cx="270" cy="215" r="10" stroke="#a4491f"/>
+  </g>
+  <!-- light beam -->
+  <path d="M282 262 L370 440 L160 440 Z" fill="#a4491f" opacity="0.12"/>
+  <g fill="none" stroke="#8a7d6d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- open book -->
+    <path d="M180 440 Q240 418 300 440 L300 468 Q240 446 180 468 Z"/>
+    <path d="M240 428 L240 456"/>
+    <path d="M196 446 Q218 436 236 440" stroke-width="3"/>
+    <path d="M244 440 Q262 436 284 446" stroke-width="3"/>
+  </g>
+  <!-- floating accent dots -->
+  <g fill="#a4491f">
+    <circle cx="330" cy="120" r="6"/>
+    <circle cx="360" cy="96" r="4"/>
+    <circle cx="310" cy="88" r="3"/>
+  </g>
+</svg>

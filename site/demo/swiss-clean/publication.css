@@ -1,3 +1,54 @@
+:root {
+  --paper: #ffffff;
+  --ink: #111111;
+  --ink-soft: #555555;
+  --accent: #e63329;
+  --rule: #e0e0e0;
+  --panel: #f4f4f4;
+  --code-bg: #111111;
+  --code-ink: #f4f4f4;
+  --font-title: Archivo, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-heading: Archivo, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-body: Inter, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-utility: Inter, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --size-base: 1rem;
+  --size-small: 0.833rem;
+  --size-h3: 1.2rem;
+  --size-h2: 1.44rem;
+  --size-title: 2.074rem;
+  --size-statistic: 1.728rem;
+  --leading-body: 1.55;
+  --leading-heading: 1.05;
+  --measure: 60ch;
+  --space-block: 1.1rem;
+  --space-section: 2.75rem;
+  --radius: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #101010;
+    --ink: #f2f2f2;
+    --ink-soft: #9e9e9e;
+    --accent: #ff5147;
+    --rule: #2a2a2a;
+    --panel: #1a1a1a;
+    --code-bg: #000000;
+    --code-ink: #e6e6e6;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #101010;
+  --ink: #f2f2f2;
+  --ink-soft: #9e9e9e;
+  --accent: #ff5147;
+  --rule: #2a2a2a;
+  --panel: #1a1a1a;
+  --code-bg: #000000;
+  --code-ink: #e6e6e6;
+}
+
 /* TastePilot publication — structural CSS.
    All canon-specific values arrive as custom properties (see tokens block
    above). One renderer, many canons: variation happens through tokens and
@@ -412,4 +463,68 @@ p code, li code {
 @media print {
   .theme-control { display: none !important; }
   body { background: #ffffff; }
+}
+
+/* silhouette wrapping */
+@media (min-width: 900px) {
+  figure[data-artwork-id="attention-lamp"] {
+    shape-outside: url("assets/attention-lamp.svg");
+    shape-image-threshold: 0.15;
+    shape-margin: 1.1rem;
+  }
+}
+@media (min-width: 900px) {
+  figure[data-artwork-id="decisions-compass"] {
+    shape-outside: url("assets/decisions-compass.svg");
+    shape-image-threshold: 0.15;
+    shape-margin: 1.1rem;
+  }
+}
+
+/* print composition */
+@page {
+  size: A4;
+}
+
+@media print {
+  /* Print always uses the light palette, whatever the reader chose on screen. */
+  :root, :root[data-theme="dark"] {
+    --paper: #ffffff;
+    --ink: #111111;
+    --ink-soft: #555555;
+    --accent: #e63329;
+    --rule: #e0e0e0;
+    --panel: #f4f4f4;
+    --code-bg: #111111;
+    --code-ink: #f4f4f4;
+  }
+
+  html { background: #ffffff; }
+  body {
+    background: #ffffff;
+    font-size: calc(var(--size-base) * 0.9);
+  }
+
+  /* Nothing animates, nothing stays hidden, nothing sticks. */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .motion-hidden { opacity: 1 !important; transform: none !important; }
+  .theme-control { display: none !important; }
+
+  /* Sensible page breaks. */
+  p { orphans: 3; widows: 3; }
+  h2, h3, h4, .section-heading { break-after: avoid; }
+  figure, blockquote, table, .callout, .statistic, .code, .art, .pull-quote {
+    break-inside: avoid;
+  }
+  .caption { break-before: avoid; }
+  .image { break-inside: avoid; }
+
+  /* Print-safe treatment. */
+  a { color: inherit; }
+  .pub-header { padding-top: 0; }
+  .table-wrap { overflow: visible; }
+  .code { white-space: pre-wrap; word-break: break-word; }
 }
