@@ -1,0 +1,7 @@
+packages:
+  - "."
+
+allowBuilds:
+  esbuild: true
+  playwright: true
+  "@playwright/test": true
