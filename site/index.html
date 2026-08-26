@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TastePilot — Editorial Intelligence for AI agents</title>
+  <meta name="description" content="TastePilot is the AI Art Director for written content. Point the coding agent you already use at your writing — Markdown, HTML, or a URL — and get an art-directed HTML publication and a print-ready PDF.">
+  <link rel="canonical" href="https://tastepilot.org/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tastepilot.org/">
+  <meta property="og:title" content="TastePilot — Editorial Intelligence for AI agents">
+  <meta property="og:description" content="Turn writing into publications worth reading. Markdown · HTML · URLs → art-directed HTML + print-ready PDF.">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d1a17'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' font-style='italic' fill='%23e9e2d6' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="masthead">
+  <a class="wordmark" href="./">Taste<em>Pilot</em></a>
+  <nav class="masthead-nav">
+    <a href="#how">How it works</a>
+    <a href="#canon">The Canon</a>
+    <a href="https://github.com/taste-pilot/home">GitHub</a>
+  </nav>
+  <div class="theme-control" role="group" aria-label="Color theme">
+    <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+    <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+    <button type="button" data-theme-choice="auto" aria-pressed="true">Auto</button>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <p class="eyebrow">Editorial Intelligence for AI&nbsp;agents</p>
+    <h1>Turn writing into publications worth&nbsp;reading.</h1>
+    <p class="hero-sub">An art director you can drop into your agent's project folder. Markdown, HTML, or a URL in — an art-directed publication and a print-ready PDF out.</p>
+    <p class="hero-io"><code>Markdown · HTML · URLs&nbsp;&nbsp;→&nbsp;&nbsp;art-directed HTML + print-ready PDF</code></p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/taste-pilot/home">Get it on GitHub</a>
+      <a class="btn btn-ghost" href="#demo">See the demo</a>
+    </div>
+  </section>
+
+  <aside class="strip" aria-label="Principle">
+    <p>Human taste. <span>AI judgment.</span> Deterministic execution.</p>
+  </aside>
+
+  <section class="intro">
+    <p class="dropcap">The coding agent you already use — Claude&nbsp;Code, Cursor, Codex, Gemini&nbsp;CLI, Copilot — can already build anything. What it lacks is an art director. TastePilot supplies one: it reads your writing, decides how a reader should experience it, and renders a finished publication — typography, pacing, drop caps, pull quotes, artwork, whitespace, print composition. Your prose is never rewritten. You write. TastePilot art-directs.</p>
+  </section>
+
+  <section class="how" id="how">
+    <h2><span class="step-word">Copy folder</span> <span class="arrow">→</span> <span class="step-word">Point at writing</span> <span class="arrow">→</span> <span class="step-word">Make it beautiful</span></h2>
+    <ol class="steps">
+      <li><strong>Copy one folder.</strong> Drop <code>tastepilot/</code> into your project. It works offline — five editorial Canons are bundled inside.</li>
+      <li><strong>Point at your writing.</strong> A Markdown draft, an HTML file, or a public article URL.</li>
+      <li><strong>Say the words.</strong> No design app, no template gallery, no layers panel.</li>
+    </ol>
+    <pre class="recipe"><code>Use ./tastepilot to make ./guide.md beautiful.
+Use your recommended treatment.
+Do not rewrite my content.</code></pre>
+  </section>
+
+  <section class="demo" id="demo">
+    <h2>Same words. Art-directed.</h2>
+    <p class="demo-lede">One document. One set of artwork. Three radically different publications.</p>
+    <div class="demo-frame" data-demo-placeholder>
+      <p class="demo-placeholder-label">Live demo shipping with v0.1</p>
+      <p class="demo-placeholder-sub">The same 2,500-word guide rendered through three Canons — content permanent, artwork durable, design disposable.</p>
+    </div>
+    <div class="demo-switch" role="group" aria-label="Canon style">
+      <button type="button" disabled>Modern Editorial</button>
+      <button type="button" disabled>Literary Classic</button>
+      <button type="button" disabled>Swiss Clean</button>
+    </div>
+  </section>
+
+  <section class="canon" id="canon">
+    <h2>The Canon</h2>
+    <p class="canon-lede">We don't start from knobs. We start from canons.</p>
+    <p>A Canon is not a template. It's a reusable editorial grammar — a coherent visual language plus the rules for <em>when and why</em> to use it. Don't ask AI to invent good design. Give it centuries of proven editorial grammar.</p>
+    <ul class="canon-cards">
+      <li><h3>Modern Editorial</h3><p>Confident contemporary long-form. Generous whitespace, expressive drop caps.</p></li>
+      <li><h3>Swiss Clean</h3><p>Grid discipline, restrained palette, typographic clarity.</p></li>
+      <li><h3>Literary Classic</h3><p>Book-inspired measure and rhythm, classical ornament.</p></li>
+      <li><h3>Technical Journal</h3><p>Structured and precise. Built for tables, statistics, and process.</p></li>
+      <li><h3>Playful Illustrated</h3><p>Illustration-forward, lighter rhythm, expressive callouts.</p></li>
+    </ul>
+  </section>
+
+  <section class="different">
+    <h2>Thousands of styles can make something different.<br>Taste knows which one to use.</h2>
+    <p>TastePilot recommends the right treatment for <em>this</em> writing — then executes it deterministically. The AI never invents CSS; it makes editorial decisions, validated against a schema, rendered exactly the same way every time.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p class="footer-cta">Stay exactly where you are. Add this capability to your AI.</p>
+  <p><a href="https://github.com/taste-pilot/home">github.com/taste-pilot/home</a> · MIT License</p>
+  <p class="epigraph">Human taste has always been cumulative. We just made it executable.</p>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
