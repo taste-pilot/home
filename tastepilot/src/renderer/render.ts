@@ -7,6 +7,7 @@ import type { ArtDirectionPlan, SectionDirection } from "../art-direction/schema
 import { escapeAttr, escapeHtml } from "./html.js";
 import { renderBlock } from "./blocks.js";
 import { googleFontsHref, tokensCss } from "./tokens.js";
+import { printCss } from "../print/css.js";
 
 export interface RenderInputs {
   document: SemanticDocument;
@@ -35,7 +36,8 @@ export async function renderPublication(
   const { document: doc, canon, plan } = inputs;
 
   const html = buildHtml(inputs);
-  const css = tokensCss(canon) + "\n" + (await baseCss()) + silhouetteCss(inputs);
+  const css =
+    tokensCss(canon) + "\n" + (await baseCss()) + silhouetteCss(inputs) + printCss(canon);
 
   await mkdir(join(outDir, "assets"), { recursive: true });
   if (inputs.assetsSourceDir && inputs.artworkFiles) {
