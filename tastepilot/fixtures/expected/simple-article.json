@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "metadata": {
+    "title": "The Quiet Craft of Reading Well",
+    "subtitle": "",
+    "author": "",
+    "language": "en"
+  },
+  "source": {
+    "type": "markdown",
+    "location": "./fixtures/simple-article.md"
+  },
+  "sections": [
+    {
+      "id": "section-1",
+      "blocks": [
+        {
+          "id": "section-1-paragraph-1",
+          "type": "paragraph",
+          "content": {
+            "text": "Reading is the last unhurried act. In a landscape engineered for the glance, a\nperson who reads a full essay start to finish is performing a small rebellion.",
+            "links": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "why-measure-matters",
+      "heading": "Why measure matters",
+      "blocks": [
+        {
+          "id": "why-measure-matters-paragraph-1",
+          "type": "paragraph",
+          "content": {
+            "text": "A line of text that runs too long tires the eye before the idea lands. Classical\nbook designers settled on sixty to seventy characters per line, and the figure\nhas survived every change of medium since.",
+            "links": []
+          }
+        },
+        {
+          "id": "why-measure-matters-quote-2",
+          "type": "quote",
+          "content": {
+            "text": "The page is a unit of attention, not a unit of paper.",
+            "links": []
+          }
+        },
+        {
+          "id": "why-measure-matters-list-3",
+          "type": "list",
+          "ordered": false,
+          "items": [
+            { "text": "Short lines feel brisk and journalistic.", "links": [] },
+            { "text": "Long lines feel scholarly, then simply exhausting.", "links": [] },
+            { "text": "The right measure disappears entirely.", "links": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "what-the-reader-never-notices",
+      "heading": "What the reader never notices",
+      "blocks": [
+        {
+          "id": "what-the-reader-never-notices-paragraph-1",
+          "type": "paragraph",
+          "content": {
+            "text": "Good editorial design is invisible. The reader remembers the argument, not the\ngrid. That invisibility is the craft.",
+            "links": []
+          }
+        }
+      ]
+    }
+  ]
+}
