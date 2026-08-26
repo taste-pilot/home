@@ -52,6 +52,38 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
     return 0;
   }
 
+  if (command === "ingest-url") {
+    const url = rest.find((a) => !a.startsWith("--"));
+    if (!url || !/^https?:\/\//.test(url)) {
+      process.stderr.write("usage: tastepilot ingest-url <http(s) url> [--mode evolve] [--out <dir>]\n");
+      return 1;
+    }
+    const modeFlagIndex = rest.indexOf("--mode");
+    const mode = modeFlagIndex >= 0 ? rest[modeFlagIndex + 1] : "evolve";
+    if (mode !== "preserve" && mode !== "evolve" && mode !== "reinvent") {
+      process.stderr.write(`unknown mode "${mode}" — use preserve, evolve, or reinvent\n`);
+      return 1;
+    }
+    const outFlagIndex = rest.indexOf("--out");
+    const outDir = outFlagIndex >= 0 && rest[outFlagIndex + 1] ? rest[outFlagIndex + 1]! : "output";
+
+    const { ingestUrl } = await import("../ingest/url.js");
+    const { serializeDocument } = await import("../semantic/serialize.js");
+    const result = await ingestUrl(url);
+    await mkdir(outDir, { recursive: true });
+    await writeFile(join(outDir, "semantic-document.json"), serializeDocument(result.document), "utf8");
+    await writeFile(
+      join(outDir, "brand-dna.json"),
+      JSON.stringify(result.brandDna, null, 2) + "\n",
+      "utf8",
+    );
+    process.stdout.write(`✓ Semantic Document + Brand DNA written to ${outDir}/\n`);
+    process.stdout.write(
+      `  ${result.document.metadata.title || "(untitled)"} — mode ${mode} (applied at render time)\n`,
+    );
+    return 0;
+  }
+
   if (command === "render") {
     const flag = (name: string): string | undefined => {
       const i = rest.indexOf(`--${name}`);
@@ -75,7 +107,21 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
     const { renderPublication } = await import("../renderer/index.js");
 
     const doc = deserializeDocument(await readFile(documentPath, "utf8"));
-    const canon = await loadCanon(canonId);
+    let canon = await loadCanon(canonId);
+
+    // Optional Brand DNA blending (Preserve / Evolve / Reinvent).
+    const dnaPath = flag("brand-dna");
+    if (dnaPath) {
+      const mode = flag("mode") ?? "evolve";
+      if (mode !== "preserve" && mode !== "evolve" && mode !== "reinvent") {
+        process.stderr.write(`unknown mode "${mode}" — use preserve, evolve, or reinvent\n`);
+        return 1;
+      }
+      const { BrandDnaSchema } = await import("../ingest/brand-dna.js");
+      const { applyBrandDna } = await import("../canon/index.js");
+      const dna = BrandDnaSchema.parse(JSON.parse(await readFile(dnaPath, "utf8")));
+      canon = applyBrandDna(canon, dna, mode);
+    }
     const planResult = validatePlanAgainstDocument(
       JSON.parse(await readFile(planPath, "utf8")),
       doc,

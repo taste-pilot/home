@@ -1,4 +1,5 @@
 export * from "./schema.js";
+export { applyBrandDna, type SourceTreatment } from "./resolve.js";
 export {
   CanonResolver,
   bundledCanonSource,
