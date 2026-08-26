@@ -11,13 +11,15 @@ Usage:
   tastepilot <command> [options]
 
 Commands:
-  ingest <file> [--out <dir>]   Convert .txt/.md/.html into a Semantic Document
-  ingest-url <url>              Convert a public webpage, with Brand DNA        (M7)
-  render --document <json> --canon <id> --plan <json> [--out <dir>]
-                                Render the publication (HTML/CSS/JS/JSON)
-  canons                        List every canon available, across all sources
-  pdf <index.html>              Produce the print-composed PDF edition          (M8)
-  canon validate|list|install   Canon tooling                                   (M11)
+  ingest <file> [--out <dir>]        Convert .txt/.md/.html into a Semantic Document
+  ingest-url <url> [--mode evolve]   Convert a public webpage, extracting Brand DNA
+  render --document <json> --canon <id> --plan <json>
+         [--manifest <json>] [--assets <dir>] [--brand-dna <json> --mode <m>] [--out <dir>]
+                                     Render the publication (HTML/CSS/JS/JSON)
+  pdf <index.html> [--format letter|a4]  Compose the print edition PDF
+  qa [publication-dir]               Screenshot 3 viewports + mechanical checks
+  canons                             List every canon available, across all sources
+  canon validate|list|install        Canon tooling                              (M11)
 
 Run this inside a project that contains the tastepilot/ folder.
 Docs: https://tastepilot.org
@@ -187,6 +189,23 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
     process.stdout.write(`✓ Print edition composed: ${result.path} (${result.pageCount} pages)\n`);
     for (const warning of result.warnings) process.stdout.write(`  ⚠ ${warning}\n`);
     return 0;
+  }
+
+  if (command === "qa") {
+    const dir = rest.find((a) => !a.startsWith("--")) ?? join("output", "publication");
+    const { runQa } = await import("../qa/index.js");
+    const report = await runQa(dir);
+    process.stdout.write(
+      report.pass ? `✓ QA passed for ${dir}\n` : `✗ QA FAILED for ${dir}\n`,
+    );
+    for (const f of report.failures) {
+      process.stdout.write(`  ✗ [${f.viewport}] ${f.check}: ${f.detail}\n`);
+    }
+    for (const w of report.warnings) {
+      process.stdout.write(`  ⚠ [${w.viewport}] ${w.check}: ${w.detail}\n`);
+    }
+    process.stdout.write(`  Report: ${join(dir, "qa", "qa-report.json")}\n`);
+    return report.pass ? 0 : 1;
   }
 
   if (command === "canons") {
