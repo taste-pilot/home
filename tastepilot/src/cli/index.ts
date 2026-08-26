@@ -226,6 +226,13 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
       process.stdout.write(
         `✓ ${result.style!.manifest.name} (${result.style!.manifest.id}@${result.style!.manifest.version}) is valid\n`,
       );
+      const { unexpectedCanonEntries } = await import("../canon/index.js");
+      const extra = await unexpectedCanonEntries(target);
+      if (extra.length > 0) {
+        process.stdout.write(
+          `! ${extra.length} file(s) here are not part of a canon and will block install: ${extra.join(", ")}\n`,
+        );
+      }
       return 0;
     }
 
@@ -234,24 +241,13 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
         process.stderr.write("usage: tastepilot canon install <path/to/canon-folder>\n");
         return 1;
       }
-      const result = await validateCanon(target);
+      const { installCanon } = await import("../canon/index.js");
+      const result = await installCanon(target);
       if (!result.ok) {
-        process.stdout.write(`✗ refusing to install an invalid canon:\n`);
+        process.stdout.write(`✗ refusing to install this canon:\n`);
         for (const err of result.errors) process.stdout.write(`  - ${err}\n`);
         return 1;
       }
-      const { cp } = await import("node:fs/promises");
-      const { dirname: pdir, join: pjoin } = await import("node:path");
-      const { fileURLToPath } = await import("node:url");
-      const installed = pjoin(
-        pdir(fileURLToPath(import.meta.url)),
-        "..",
-        "..",
-        "canon",
-        "installed",
-        result.style!.manifest.id,
-      );
-      await cp(target, installed, { recursive: true });
       process.stdout.write(
         `✓ installed ${result.style!.manifest.id} — now listed as a "local" canon source\n`,
       );
