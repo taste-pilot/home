@@ -1,0 +1,30 @@
+{
+  "id": "swiss-clean",
+  "name": "Swiss Clean",
+  "author": "TastePilot",
+  "license": "MIT",
+  "version": "1.0.0",
+  "tier": "starter",
+  "description": "Grid discipline, restrained palette, typographic clarity. No ornament that lacks a job.",
+  "tags": [
+    "swiss",
+    "minimal",
+    "grid",
+    "modernist"
+  ],
+  "dropCaps": {
+    "preferred": "none",
+    "allowed": [
+      "none"
+    ]
+  },
+  "artwork": {
+    "density": "light",
+    "style": "flat geometric diagrammatic shapes in a single accent color, no gradients, no texture",
+    "wrapAllowed": false,
+    "placements": [
+      "full",
+      "inline"
+    ]
+  }
+}

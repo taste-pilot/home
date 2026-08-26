@@ -1,0 +1,65 @@
+{
+  "fontCount": 3,
+  "title": {
+    "family": "IBM Plex Sans",
+    "fallbacks": [
+      "-apple-system",
+      "Segoe UI",
+      "Helvetica Neue",
+      "Arial",
+      "sans-serif"
+    ],
+    "googleFont": "IBM Plex Sans",
+    "weights": [
+      500,
+      700
+    ]
+  },
+  "heading": {
+    "family": "IBM Plex Sans",
+    "fallbacks": [
+      "-apple-system",
+      "Segoe UI",
+      "Helvetica Neue",
+      "Arial",
+      "sans-serif"
+    ],
+    "googleFont": "IBM Plex Sans",
+    "weights": [
+      500,
+      700
+    ]
+  },
+  "body": {
+    "family": "IBM Plex Serif",
+    "fallbacks": [
+      "Georgia",
+      "Times New Roman",
+      "serif"
+    ],
+    "googleFont": "IBM Plex Serif",
+    "weights": [
+      400,
+      600
+    ]
+  },
+  "utility": {
+    "family": "IBM Plex Mono",
+    "fallbacks": [
+      "ui-monospace",
+      "SF Mono",
+      "Menlo",
+      "Consolas",
+      "monospace"
+    ],
+    "googleFont": "IBM Plex Mono",
+    "weights": [
+      400,
+      500
+    ]
+  },
+  "baseSizeRem": 1.0,
+  "scaleRatio": 1.25,
+  "bodyLeading": 1.6,
+  "headingLeading": 1.15
+}

@@ -1,0 +1,34 @@
+{
+  "id": "literary-classic",
+  "name": "Literary Classic",
+  "author": "TastePilot",
+  "license": "MIT",
+  "version": "1.0.0",
+  "tier": "starter",
+  "description": "Book-inspired measure and rhythm, classical ornament, a single serif voice.",
+  "tags": [
+    "literary",
+    "book",
+    "classic",
+    "serif"
+  ],
+  "dropCaps": {
+    "preferred": "classic-3",
+    "allowed": [
+      "classic-3",
+      "classic-5",
+      "sunken",
+      "none"
+    ]
+  },
+  "artwork": {
+    "density": "light",
+    "style": "engraved cross-hatched monochrome illustration in the tradition of book plates",
+    "wrapAllowed": true,
+    "placements": [
+      "left",
+      "right",
+      "inline"
+    ]
+  }
+}
