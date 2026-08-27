@@ -1,6 +1,7 @@
 export * from "./schema.js";
 export { applyBrandDna, type SourceTreatment } from "./resolve.js";
 export { validateCanon, type CanonValidationResult } from "./validate.js";
+export { installCanon, unexpectedCanonEntries, type CanonInstallResult } from "./install.js";
 export { LocalCanonRegistry, type CanonRegistry } from "./registry.js";
 export {
   CanonResolver,
@@ -8,6 +9,8 @@ export {
   localCanonSource,
   defaultResolver,
   loadCanonDir,
+  installedCanonRoot,
+  CANON_FILES,
   type CanonSource,
   type CanonSourceKind,
   type CanonSummary,
