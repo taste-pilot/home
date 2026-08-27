@@ -51,6 +51,16 @@ const PART_FILES = {
   print: PrintGrammarSchema,
 } as const;
 
+/**
+ * The complete file list of a canon. These are the only files loaded, the only
+ * files the security scan sees, and — so the two can never diverge — the only
+ * files `canon install` copies. Anything else in a canon folder is ignored.
+ */
+export const CANON_FILES = [
+  "manifest.json",
+  ...Object.keys(PART_FILES).map((part) => `${part}.json`),
+] as const;
+
 /** Load and validate one canon folder. Throws with actionable messages. */
 export async function loadCanonDir(dir: string): Promise<CanonStyle> {
   const readPart = async (file: string): Promise<unknown> => {
@@ -143,8 +153,13 @@ export function bundledCanonSource(): CanonSource {
   return new DirectoryCanonSource("bundled", join(packageRoot(), "canon", "starter"));
 }
 
+/** Where `canon install` writes, and where the "local" source reads. */
+export function installedCanonRoot(): string {
+  return join(packageRoot(), "canon", "installed");
+}
+
 export function localCanonSource(root?: string): CanonSource {
-  return new DirectoryCanonSource("local", root ?? join(packageRoot(), "canon", "installed"));
+  return new DirectoryCanonSource("local", root ?? installedCanonRoot());
 }
 
 export class CanonResolver {

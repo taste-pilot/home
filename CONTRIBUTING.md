@@ -45,9 +45,13 @@ pnpm demo                 # rebuild examples/demo + site/demo
 See [`canon/README.md`](canon/README.md) and
 [`tastepilot/references/canon-guide.md`](tastepilot/references/canon-guide.md).
 Validate with `pnpm dev canon validate <dir>` — strict schemas plus a security
-scan; canons carrying markup, scripts, or agent instructions are refused. The
-open Community Canon repository (submissions, forks, attribution) opens after
-v0.1.
+scan; canons carrying markup, scripts, or agent instructions are refused. A
+Canon *is* its six files (`manifest`, `typography`, `palette`, `layout`,
+`motion`, `print`): `canon install` copies those and only those, and refuses
+outright — naming the offenders — if the folder holds anything else, so nothing
+unscanned can ride along into your project. Keep READMEs, scripts, and notes
+outside the Canon folder. The open Community Canon repository (submissions,
+forks, attribution) opens after v0.1.
 
 ## License
 
