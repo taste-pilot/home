@@ -54,6 +54,11 @@ export interface UrlIngestResult {
 export interface UrlIngestOptions {
   /** Max milliseconds to wait for the page to settle. */
   timeoutMs?: number;
+  /**
+   * When the capture happened. Defaults to now; pass a fixed value to make a
+   * capture reproducible.
+   */
+  capturedAt?: Date;
 }
 
 export async function ingestUrl(
@@ -61,6 +66,9 @@ export async function ingestUrl(
   options: UrlIngestOptions = {},
 ): Promise<UrlIngestResult> {
   const timeout = options.timeoutMs ?? 30_000;
+  // Stamped before the fetch: a capture is of the page as it was when we asked
+  // for it, not as it was once a slow page finished settling.
+  const capturedAt = (options.capturedAt ?? new Date()).toISOString();
   const browser = await chromium.launch();
   try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
@@ -98,7 +106,13 @@ export async function ingestUrl(
     return {
       document: {
         ...document,
-        source: { ...document.source, type: "url", location: url, sourceUrl: url },
+        source: {
+          ...document.source,
+          type: "url",
+          location: url,
+          sourceUrl: url,
+          capturedAt,
+        },
       },
       brandDna,
     };
