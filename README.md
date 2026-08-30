@@ -174,7 +174,7 @@ Live at [tastepilot.org](https://tastepilot.org/#demo) · inspectable output in 
 - **Community Canon** — an open repository of editorial styles: submissions, forks, attribution, automated validation.
 - **Certified & Library Canon** — professionally researched, print-tuned, accessibility-tested styles.
 - **House Styles** — your brand's DNA, extracted once and reused everywhere.
-- **Canon registry API** — versioned style delivery with local caching; the Skilllet keeps working offline.
+- **Canon registry API** — versioned style delivery with local caching; the Skilllet keeps working offline. *The client ships in v0.2 (`TASTEPILOT_CANON_URL`); the service follows.*
 - **Hosted publishing** — optional, never required.
 
 **Thousands of styles can make something different. Taste knows which one to use.**

@@ -20,6 +20,19 @@ const FORBIDDEN_PATTERNS: Array<{ pattern: RegExp; reason: string }> = [
   },
 ];
 
+/**
+ * Scan every string in a parsed canon for content that must never appear.
+ *
+ * Exported because remote canons need exactly this: schema validation proves
+ * the shape, the scan proves the *content* — a registry response is untrusted
+ * input, and a "description" carrying agent instructions is the whole attack.
+ */
+export function scanCanonStrings(style: CanonStyle): string[] {
+  const errors: string[] = [];
+  scanStrings(style, "canon", errors);
+  return errors;
+}
+
 function scanStrings(value: unknown, path: string, errors: string[]): void {
   if (typeof value === "string") {
     for (const { pattern, reason } of FORBIDDEN_PATTERNS) {
@@ -46,8 +59,7 @@ export async function validateCanon(dir: string): Promise<CanonValidationResult>
   } catch (err) {
     return { ok: false, errors: [(err as Error).message] };
   }
-  const errors: string[] = [];
-  scanStrings(style, "canon", errors);
+  const errors = scanCanonStrings(style);
   if (errors.length > 0) return { ok: false, errors };
   return { ok: true, style, errors: [] };
 }

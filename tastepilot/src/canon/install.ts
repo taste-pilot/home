@@ -1,4 +1,4 @@
-import { copyFile, mkdir, readdir, rm } from "node:fs/promises";
+import { copyFile, mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { CANON_FILES, installedCanonRoot } from "./load.js";
 import { validateCanon } from "./validate.js";
@@ -61,4 +61,28 @@ export async function installCanon(target: string, root?: string): Promise<Canon
     await copyFile(join(target, file), join(dir, file));
   }
   return { ok: true, style, dir, errors: [] };
+}
+
+/**
+ * Install a canon that arrived as data rather than as a folder — from the
+ * registry. The same six files land on disk, written from the validated
+ * object, so a remote install and a local one are indistinguishable
+ * afterwards.
+ */
+export async function installCanonStyle(style: CanonStyle, root?: string): Promise<string> {
+  const dir = join(root ?? installedCanonRoot(), style.manifest.id);
+  await rm(dir, { recursive: true, force: true });
+  await mkdir(dir, { recursive: true });
+  const parts: Record<string, unknown> = {
+    "manifest.json": style.manifest,
+    "typography.json": style.typography,
+    "palette.json": style.palette,
+    "layout.json": style.layout,
+    "motion.json": style.motion,
+    "print.json": style.print,
+  };
+  for (const file of CANON_FILES) {
+    await writeFile(join(dir, file), JSON.stringify(parts[file], null, 2) + "\n", "utf8");
+  }
+  return dir;
 }

@@ -92,7 +92,11 @@ export async function loadCanonDir(dir: string): Promise<CanonStyle> {
   const manifest = parsePart(CanonManifestSchema, await readPart("manifest.json"), "manifest.json");
   const style = {
     manifest,
-    typography: parsePart(PART_FILES.typography, await readPart("typography.json"), "typography.json"),
+    typography: parsePart(
+      PART_FILES.typography,
+      await readPart("typography.json"),
+      "typography.json",
+    ),
     palette: parsePart(PART_FILES.palette, await readPart("palette.json"), "palette.json"),
     layout: parsePart(PART_FILES.layout, await readPart("layout.json"), "layout.json"),
     motion: parsePart(PART_FILES.motion, await readPart("motion.json"), "motion.json"),
@@ -184,7 +188,11 @@ export class CanonResolver {
   }
 }
 
-/** Default resolver: bundled starters + user-installed local canons. */
+/**
+ * The offline core: bundled starters + user-installed local canons, and
+ * nothing that touches a network. `configuredResolver()` in ./index.ts is what
+ * callers want — it is this chain plus a remote registry when one is set.
+ */
 export function defaultResolver(): CanonResolver {
   return new CanonResolver([bundledCanonSource(), localCanonSource()]);
 }
