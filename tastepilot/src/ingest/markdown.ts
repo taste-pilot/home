@@ -15,6 +15,8 @@ const parser = unified().use(remarkParse).use(remarkGfm);
  * Structural conventions:
  * - the first level-1 heading becomes the document title
  * - level-1/2 headings start new sections; deeper headings stay as blocks
+ * - a paragraph opening `STAT:` or `CALLOUT:` becomes that block (see
+ *   editorialBlock)
  * - prose is never rewritten — text nodes are carried through verbatim
  */
 export function ingestMarkdown(content: string, location: string): SemanticDocument {
@@ -83,11 +85,14 @@ function nodeToBlocks(
           },
         ];
       }
+      const content = flattenPhrasing(children);
+      const editorial = editorialBlock(content, section, index, taken);
+      if (editorial) return [editorial];
       return [
         {
           id: blockId(section, index, "paragraph", taken),
           type: "paragraph",
-          content: flattenPhrasing(children),
+          content,
         },
       ];
     }
@@ -136,6 +141,63 @@ function nodeToBlocks(
     default:
       return [];
   }
+}
+
+/**
+ * Markdown has no syntax for a statistic or a callout, so authors mark them
+ * with a prefix on an ordinary paragraph:
+ *
+ *   STAT: 38% — of readers abandon documents that are hard to look at
+ *   CALLOUT: The one-per-section rule — Every section gets at most one visual.
+ *
+ * The separator is an em dash. A paragraph that opens with the prefix but has
+ * no em dash is left as prose, so the convention can never silently eat a
+ * sentence that merely starts with the word. Whitespace around the separator
+ * may include a soft line break, because authors wrap their source.
+ */
+const STAT = /^STAT:\s+([\s\S]+?)\s+—\s+([\s\S]+)$/;
+const CALLOUT = /^CALLOUT:\s+([\s\S]+?)\s+—\s+([\s\S]+)$/;
+
+function editorialBlock(
+  content: InlineText,
+  section: string,
+  index: number,
+  taken: Set<string>,
+): ContentBlock | undefined {
+  const stat = STAT.exec(content.text);
+  if (stat) {
+    return {
+      id: blockId(section, index, "statistic", taken),
+      type: "statistic",
+      value: stat[1]!,
+      label: stat[2]!,
+    };
+  }
+  const callout = CALLOUT.exec(content.text);
+  if (callout) {
+    // The body keeps its links and emphasis: it is prose like any other.
+    const body = sliceInline(content, content.text.length - callout[2]!.length);
+    return {
+      id: blockId(section, index, "callout", taken),
+      type: "callout",
+      title: callout[1]!,
+      content: body,
+    };
+  }
+  return undefined;
+}
+
+/** The tail of an InlineText from `start`, with links and marks carried over. */
+function sliceInline(inline: InlineText, start: number): InlineText {
+  const shift = (span: { start: number; end: number }) => ({
+    start: Math.max(0, span.start - start),
+    end: span.end - start,
+  });
+  return {
+    text: inline.text.slice(start),
+    links: inline.links.filter((l) => l.end > start).map((l) => ({ ...l, ...shift(l) })),
+    marks: inline.marks.filter((m) => m.end > start).map((m) => ({ ...m, ...shift(m) })),
+  };
 }
 
 function listItems(node: List): InlineText[] {

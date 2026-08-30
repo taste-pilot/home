@@ -30,11 +30,11 @@
         ],
         "statistics": [
           {
-            "blockId": "why-presentation-decides-what-happens-paragraph-3",
+            "blockId": "why-presentation-decides-what-happens-statistic-3",
             "treatment": "oversized"
           },
           {
-            "blockId": "why-presentation-decides-what-happens-paragraph-4",
+            "blockId": "why-presentation-decides-what-happens-statistic-4",
             "treatment": "oversized"
           }
         ],
@@ -72,7 +72,7 @@
         "statistics": [],
         "callouts": [
           {
-            "blockId": "the-five-decisions-paragraph-4",
+            "blockId": "the-five-decisions-callout-4",
             "treatment": "panel"
           }
         ]
@@ -92,7 +92,7 @@
         "pullQuotes": [],
         "statistics": [
           {
-            "blockId": "what-restraint-buys-you-paragraph-3",
+            "blockId": "what-restraint-buys-you-statistic-3",
             "treatment": "panel"
           }
         ],
@@ -106,7 +106,7 @@
         "statistics": [],
         "callouts": [
           {
-            "blockId": "where-to-start-tomorrow-paragraph-3",
+            "blockId": "where-to-start-tomorrow-callout-3",
             "treatment": "panel"
           }
         ]
@@ -169,13 +169,13 @@
             }
           },
           {
-            "id": "why-presentation-decides-what-happens-paragraph-3",
+            "id": "why-presentation-decides-what-happens-statistic-3",
             "type": "statistic",
             "value": "38%",
             "label": "of readers say they abandon long documents that are \"hard to look at\" before finishing the first section"
           },
           {
-            "id": "why-presentation-decides-what-happens-paragraph-4",
+            "id": "why-presentation-decides-what-happens-statistic-4",
             "type": "statistic",
             "value": "4 seconds",
             "label": "the average time before a reader first scrolls a long-form page, deciding its fate from appearance alone"
@@ -351,14 +351,14 @@
             }
           },
           {
-            "id": "the-five-decisions-paragraph-4",
+            "id": "the-five-decisions-callout-4",
             "type": "callout",
-            "title": "The one-per-section rule",
             "content": {
-              "text": "Every section gets at most one visual event. If two moments in a section both feel essential, the section wants to be two sections. This rule alone prevents most amateur-looking documents.",
+              "text": "Every section gets at most one visual\nevent. If two moments in a section both feel essential, the section wants to\nbe two sections. This rule alone prevents most amateur-looking documents.",
               "links": [],
               "marks": []
-            }
+            },
+            "title": "The one-per-section rule"
           }
         ]
       },
@@ -451,7 +451,7 @@
             }
           },
           {
-            "id": "what-restraint-buys-you-paragraph-3",
+            "id": "what-restraint-buys-you-statistic-3",
             "type": "statistic",
             "value": "2×",
             "label": "how much more often documents with clear visual hierarchy are shared, compared with unformatted versions of the same content"
@@ -490,14 +490,14 @@
             }
           },
           {
-            "id": "where-to-start-tomorrow-paragraph-3",
+            "id": "where-to-start-tomorrow-callout-3",
             "type": "callout",
-            "title": "Remember",
             "content": {
-              "text": "You do not need to become a designer. You need your writing to be treated the way it deserves. Those are different problems, and the second one is now the easy one.",
+              "text": "You do not need to become a designer. You need your\nwriting to be treated the way it deserves. Those are different problems, and\nthe second one is now the easy one.",
               "links": [],
               "marks": []
-            }
+            },
+            "title": "Remember"
           },
           {
             "id": "where-to-start-tomorrow-paragraph-4",

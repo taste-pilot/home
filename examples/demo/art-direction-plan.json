@@ -24,11 +24,11 @@
       ],
       "statistics": [
         {
-          "blockId": "why-presentation-decides-what-happens-paragraph-3",
+          "blockId": "why-presentation-decides-what-happens-statistic-3",
           "treatment": "oversized"
         },
         {
-          "blockId": "why-presentation-decides-what-happens-paragraph-4",
+          "blockId": "why-presentation-decides-what-happens-statistic-4",
           "treatment": "oversized"
         }
       ],
@@ -66,7 +66,7 @@
       "statistics": [],
       "callouts": [
         {
-          "blockId": "the-five-decisions-paragraph-4",
+          "blockId": "the-five-decisions-callout-4",
           "treatment": "panel"
         }
       ]
@@ -86,7 +86,7 @@
       "pullQuotes": [],
       "statistics": [
         {
-          "blockId": "what-restraint-buys-you-paragraph-3",
+          "blockId": "what-restraint-buys-you-statistic-3",
           "treatment": "panel"
         }
       ],
@@ -100,7 +100,7 @@
       "statistics": [],
       "callouts": [
         {
-          "blockId": "where-to-start-tomorrow-paragraph-3",
+          "blockId": "where-to-start-tomorrow-callout-3",
           "treatment": "panel"
         }
       ]

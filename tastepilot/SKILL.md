@@ -36,6 +36,16 @@ cd tastepilot && bash scripts/setup.sh
      (source treatments: `preserve` keeps the site's visual DNA strongly,
      `evolve` blends brand DNA with a Canon — the default, `reinvent` ignores
      the source design)
+
+   Markdown has no syntax for statistics or callouts, so a paragraph may
+   open with a prefix and an em dash — the ingestor promotes it:
+
+   ```markdown
+   STAT: 38% — of readers abandon documents that are hard to look at
+   CALLOUT: The one-per-section rule — Every section gets at most one visual.
+   ```
+
+   A paragraph opening with the prefix but carrying no em dash stays prose.
 3. **Read** `output/semantic-document.json` — understand hierarchy, key ideas,
    quotations, statistics, pacing, and visual opportunities. This is Editor
    work: what is the document saying, and what deserves emphasis?
