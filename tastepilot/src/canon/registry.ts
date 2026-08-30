@@ -1,4 +1,4 @@
-import type { CanonSource, CanonSummary } from "./load.js";
+import type { CanonSource, CanonSourceKind, CanonSummary } from "./load.js";
 import type { CanonStyle } from "./schema.js";
 
 /**
@@ -28,5 +28,30 @@ export class LocalCanonRegistry implements CanonRegistry {
   }
 }
 
-// HttpCanonRegistry (remote fetch, strict validation, local caching, offline
-// fallback) ships with the registry API — the interface above is its contract.
+/**
+ * Adapts a registry back into a CanonSource, so remote styles fall through the
+ * same resolver chain as bundled and local ones — recommendation stays
+ * source-neutral, and a remote canon is never privileged over a local one.
+ */
+export class RegistryCanonSource implements CanonSource {
+  constructor(
+    readonly kind: CanonSourceKind,
+    private readonly registry: CanonRegistry,
+  ) {}
+
+  list(): Promise<CanonSummary[]> {
+    return this.registry.list();
+  }
+
+  async load(id: string): Promise<CanonStyle | undefined> {
+    try {
+      return await this.registry.fetch(id);
+    } catch (err) {
+      // A registry that does not have this canon is not an error — the next
+      // source may. A registry serving content we refuse is a different story
+      // and must not be swallowed by the fall-through.
+      if (err instanceof Error && "reason" in err && err.reason === "refused") throw err;
+      return undefined;
+    }
+  }
+}

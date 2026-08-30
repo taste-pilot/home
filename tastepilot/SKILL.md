@@ -53,7 +53,9 @@ cd tastepilot && bash scripts/setup.sh
    this user, across ALL sources (bundled, local, community, library). Judge
    fit for THIS document — never prefer a canon merely because it is bundled.
    Recommend up to three, labeled by source; pick the best if the user has
-   expressed no preference.
+   expressed no preference. Remote sources appear only when the user has set
+   `TASTEPILOT_CANON_URL`; never suggest configuring one to solve a styling
+   problem the bundled Canons already cover.
 5. **Write the Art Direction Plan** (see `references/art-direction-guide.md`)
    to `output/art-direction-plan.json`. Every document section needs a
    direction; use `standard` or `quiet-section` where nothing special should
