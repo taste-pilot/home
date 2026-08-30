@@ -3,6 +3,7 @@ import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { chromium, type Page } from "playwright";
+import { settlePage } from "../browser/settle.js";
 
 /**
  * Automated visual QA for a rendered publication. Screenshots at three
@@ -47,6 +48,7 @@ export async function runQa(publicationDir: string, qaDir?: string): Promise<QaR
     for (const vp of VIEWPORTS) {
       const page = await browser.newPage({ viewport: { width: vp.width, height: vp.height } });
       await page.goto(url, { waitUntil: "networkidle" });
+      await settlePage(page);
       await collectChecks(page, vp.name, failures, warnings);
       const shot = join(outDir, `${vp.name}.png`);
       await page.screenshot({ path: shot, fullPage: true });
@@ -57,6 +59,7 @@ export async function runQa(publicationDir: string, qaDir?: string): Promise<QaR
     // Theme control behavior (desktop only).
     const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     await page.goto(url, { waitUntil: "networkidle" });
+    await settlePage(page);
     const themeWorks = await page.evaluate(() => {
       const dark = document.querySelector<HTMLButtonElement>('[data-theme-choice="dark"]');
       if (!dark) return false;
@@ -78,9 +81,8 @@ export async function runQa(publicationDir: string, qaDir?: string): Promise<QaR
       reducedMotion: "reduce",
     });
     await rmPage.goto(url, { waitUntil: "networkidle" });
-    const hidden = await rmPage.evaluate(
-      () => document.querySelectorAll(".motion-hidden").length,
-    );
+    await settlePage(rmPage);
+    const hidden = await rmPage.evaluate(() => document.querySelectorAll(".motion-hidden").length);
     if (hidden > 0) {
       failures.push({
         check: "reduced-motion",
