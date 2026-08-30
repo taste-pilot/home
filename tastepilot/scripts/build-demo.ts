@@ -27,6 +27,7 @@ import {
 import { renderPublication } from "../src/renderer/index.js";
 import { runQa } from "../src/qa/index.js";
 import { composePdf } from "../src/print/index.js";
+import { settlePage } from "../src/browser/settle.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pkgRoot = join(here, "..");
@@ -247,6 +248,11 @@ async function syncSite(source: string): Promise<void> {
       await page.goto("file://" + join(siteDemo, target, "index.html"), {
         waitUntil: "networkidle",
       });
+      await settlePage(page);
+      // The theme control is reader chrome, not the publication — the print
+      // edition already drops it, and its rounded clip is the one thing on
+      // these pages Skia anti-aliases differently from run to run.
+      await page.addStyleTag({ content: ".theme-control { display: none !important; }" });
       await page.screenshot({ path: join(assetsDir, `demo-${target}.png`) });
       await page.close();
     }
@@ -263,6 +269,7 @@ ${CANONS.map(
     await writeFile(stripPath, strip, "utf8");
     const page = await browser.newPage({ viewport: { width: 1600, height: 620 } });
     await page.goto("file://" + stripPath, { waitUntil: "networkidle" });
+    await settlePage(page);
     await page.screenshot({ path: join(assetsDir, "demo-strip.png") });
     await page.close();
     const { rm } = await import("node:fs/promises");
