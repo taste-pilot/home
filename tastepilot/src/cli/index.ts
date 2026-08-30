@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 import { mkdir, writeFile } from "node:fs/promises";
+import { realpathSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { parseArgs, flagValue, type ParsedArgs } from "./args.js";
 
 const HELP = `
 tastepilot — Editorial Intelligence for AI agents
@@ -19,11 +22,33 @@ Commands:
   pdf <index.html> [--format letter|a4]  Compose the print edition PDF
   qa [publication-dir]               Screenshot 3 viewports + mechanical checks
   canons                             List every canon available, across all sources
-  canon validate|list|install        Canon tooling                              (M11)
+  canon validate|list|install        Canon tooling
 
 Run this inside a project that contains the tastepilot/ folder.
 Docs: https://tastepilot.org
 `;
+
+const USAGE: Record<string, string> = {
+  ingest: "tastepilot ingest <file> [--out <dir>]",
+  "ingest-url": "tastepilot ingest-url <http(s) url> [--mode evolve] [--out <dir>]",
+  render:
+    "tastepilot render --document <json> --canon <id> --plan <json> [--manifest <json>] [--assets <dir>] [--brand-dna <json> --mode <m>] [--out <dir>]",
+  pdf: "tastepilot pdf <path/to/index.html> [--format letter|a4] [--out <file>]",
+  qa: "tastepilot qa [publication-dir]",
+  canon: "tastepilot canon validate|list|install <path/to/canon-folder>",
+};
+
+function usageError(command: string, detail?: string): number {
+  if (detail) process.stderr.write(`tastepilot: ${detail}\n`);
+  process.stderr.write(`usage: ${USAGE[command]}\n`);
+  return 1;
+}
+
+/** Unknown options are refused rather than ignored — a typo'd flag is a bug. */
+function rejectUnknownFlags(command: string, args: ParsedArgs): number | undefined {
+  if (args.unknown.length === 0) return undefined;
+  return usageError(command, `unknown option ${args.unknown.join(", ")}`);
+}
 
 export async function main(argv: string[] = process.argv.slice(2)): Promise<number> {
   const [command, ...rest] = argv;
@@ -33,13 +58,12 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
   }
 
   if (command === "ingest") {
-    const file = rest.find((a) => !a.startsWith("--"));
-    if (!file) {
-      process.stderr.write("usage: tastepilot ingest <file> [--out <dir>]\n");
-      return 1;
-    }
-    const outFlag = rest.indexOf("--out");
-    const outDir = outFlag >= 0 && rest[outFlag + 1] ? rest[outFlag + 1]! : "output";
+    const args = parseArgs(rest, ["out"]);
+    const bad = rejectUnknownFlags(command, args);
+    if (bad !== undefined) return bad;
+    const file = args.positionals[0];
+    if (!file) return usageError(command);
+    const outDir = flagValue(args, "out") ?? "output";
 
     const { ingestFile } = await import("../ingest/index.js");
     const { serializeDocument } = await import("../semantic/serialize.js");
@@ -55,19 +79,17 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
   }
 
   if (command === "ingest-url") {
-    const url = rest.find((a) => !a.startsWith("--"));
-    if (!url || !/^https?:\/\//.test(url)) {
-      process.stderr.write("usage: tastepilot ingest-url <http(s) url> [--mode evolve] [--out <dir>]\n");
-      return 1;
-    }
-    const modeFlagIndex = rest.indexOf("--mode");
-    const mode = modeFlagIndex >= 0 ? rest[modeFlagIndex + 1] : "evolve";
+    const args = parseArgs(rest, ["mode", "out"]);
+    const bad = rejectUnknownFlags(command, args);
+    if (bad !== undefined) return bad;
+    const url = args.positionals[0];
+    if (!url || !/^https?:\/\//.test(url)) return usageError(command);
+    const mode = flagValue(args, "mode") ?? "evolve";
     if (mode !== "preserve" && mode !== "evolve" && mode !== "reinvent") {
       process.stderr.write(`unknown mode "${mode}" — use preserve, evolve, or reinvent\n`);
       return 1;
     }
-    const outFlagIndex = rest.indexOf("--out");
-    const outDir = outFlagIndex >= 0 && rest[outFlagIndex + 1] ? rest[outFlagIndex + 1]! : "output";
+    const outDir = flagValue(args, "out") ?? "output";
 
     const { ingestUrl } = await import("../ingest/url.js");
     const { serializeDocument } = await import("../semantic/serialize.js");
@@ -87,19 +109,23 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
   }
 
   if (command === "render") {
-    const flag = (name: string): string | undefined => {
-      const i = rest.indexOf(`--${name}`);
-      return i >= 0 ? rest[i + 1] : undefined;
-    };
+    const args = parseArgs(rest, [
+      "document",
+      "canon",
+      "plan",
+      "manifest",
+      "assets",
+      "brand-dna",
+      "mode",
+      "out",
+    ]);
+    const bad = rejectUnknownFlags(command, args);
+    if (bad !== undefined) return bad;
+    const flag = (name: string): string | undefined => flagValue(args, name);
     const documentPath = flag("document");
     const canonId = flag("canon");
     const planPath = flag("plan");
-    if (!documentPath || !canonId || !planPath) {
-      process.stderr.write(
-        "usage: tastepilot render --document <json> --canon <id> --plan <json> [--out <dir>]\n",
-      );
-      return 1;
-    }
+    if (!documentPath || !canonId || !planPath) return usageError(command);
     const outDir = flag("out") ?? join("output", "publication");
 
     const { readFile } = await import("node:fs/promises");
@@ -167,19 +193,17 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
   }
 
   if (command === "pdf") {
-    const file = rest.find((a) => !a.startsWith("--"));
-    if (!file) {
-      process.stderr.write("usage: tastepilot pdf <path/to/index.html> [--format letter|a4] [--out <file>]\n");
-      return 1;
-    }
-    const formatFlag = rest.indexOf("--format");
-    const format = formatFlag >= 0 ? rest[formatFlag + 1] : undefined;
+    const args = parseArgs(rest, ["format", "out"]);
+    const bad = rejectUnknownFlags(command, args);
+    if (bad !== undefined) return bad;
+    const file = args.positionals[0];
+    if (!file) return usageError(command);
+    const format = flagValue(args, "format");
     if (format !== undefined && format !== "letter" && format !== "a4") {
       process.stderr.write(`unknown format "${format}" — use letter or a4\n`);
       return 1;
     }
-    const outFlagIdx = rest.indexOf("--out");
-    const out = outFlagIdx >= 0 ? rest[outFlagIdx + 1] : undefined;
+    const out = flagValue(args, "out");
 
     const { composePdf } = await import("../print/index.js");
     const result = await composePdf(file, {
@@ -192,7 +216,10 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
   }
 
   if (command === "qa") {
-    const dir = rest.find((a) => !a.startsWith("--")) ?? join("output", "publication");
+    const args = parseArgs(rest, []);
+    const bad = rejectUnknownFlags(command, args);
+    if (bad !== undefined) return bad;
+    const dir = args.positionals[0] ?? join("output", "publication");
     const { runQa } = await import("../qa/index.js");
     const report = await runQa(dir);
     process.stdout.write(
@@ -209,7 +236,10 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
   }
 
   if (command === "canon") {
-    const [sub, target] = rest;
+    const args = parseArgs(rest, []);
+    const bad = rejectUnknownFlags(command, args);
+    if (bad !== undefined) return bad;
+    const [sub, target] = args.positionals;
     const { validateCanon } = await import("../canon/index.js");
 
     if (sub === "validate") {
@@ -284,6 +314,29 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
   return 1;
 }
 
-main().then((code) => {
-  process.exitCode = code;
-});
+/**
+ * Run only as the entry point, so tests can import main() without the module
+ * executing against the test runner's argv.
+ */
+function isEntryPoint(): boolean {
+  const entry = process.argv[1];
+  if (!entry) return false;
+  return realpathSync(entry) === realpathSync(fileURLToPath(import.meta.url));
+}
+
+if (isEntryPoint()) {
+  main()
+    .then((code) => {
+      process.exitCode = code;
+    })
+    .catch((err: unknown) => {
+      // A failure the user caused (a missing file, a bad URL) is a message,
+      // not a Node stack trace. Set TASTEPILOT_DEBUG=1 for the stack.
+      const message = err instanceof Error ? err.message : String(err);
+      process.stderr.write(`tastepilot: ${message}\n`);
+      if (process.env.TASTEPILOT_DEBUG && err instanceof Error && err.stack) {
+        process.stderr.write(`${err.stack}\n`);
+      }
+      process.exitCode = 1;
+    });
+}

@@ -5,7 +5,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { AddressInfo } from "node:net";
 import { ingestUrl } from "../../src/ingest/url.js";
-import { serializeDocument } from "../../src/semantic/serialize.js";
+import { serializeDocument, withoutCaptureTime } from "../../src/semantic/serialize.js";
 import { applyBrandDna, loadCanon } from "../../src/canon/index.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -88,4 +88,33 @@ test("preserve/evolve/reinvent blend brand DNA into the canon correctly", async 
   expect(preserved.typography.heading.family).toBe("Helvetica");
   expect(preserved.typography.body.family).toBe("Georgia");
   expect(preserved.typography.body.fallbacks[0]).toBe(canon.typography.body.family);
+});
+
+test("a capture records when it happened, and nothing else moves", async () => {
+  const before = Date.now();
+  const [first, second] = [await ingestUrl(baseUrl), await ingestUrl(baseUrl)];
+  const after = Date.now();
+
+  // Provenance: a page is not the same page a month later.
+  const stamp = first.document.source.capturedAt;
+  expect(stamp).toBeDefined();
+  expect(new Date(stamp!).toISOString()).toBe(stamp);
+  expect(new Date(stamp!).getTime()).toBeGreaterThanOrEqual(before - 1000);
+  expect(new Date(stamp!).getTime()).toBeLessThanOrEqual(after + 1000);
+  expect(second.document.source.capturedAt).not.toBe(stamp);
+
+  // Everything else re-ingests byte-for-byte.
+  expect(serializeDocument(withoutCaptureTime(second.document))).toBe(
+    serializeDocument(withoutCaptureTime(first.document)),
+  );
+});
+
+test("an explicit capture time makes a capture reproducible", async () => {
+  const capturedAt = new Date("2026-03-04T05:06:07.000Z");
+  const [a, b] = [
+    await ingestUrl(baseUrl, { capturedAt }),
+    await ingestUrl(baseUrl, { capturedAt }),
+  ];
+  expect(a.document.source.capturedAt).toBe("2026-03-04T05:06:07.000Z");
+  expect(serializeDocument(b.document)).toBe(serializeDocument(a.document));
 });
