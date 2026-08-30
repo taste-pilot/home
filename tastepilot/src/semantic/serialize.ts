@@ -17,3 +17,18 @@ export function deserializeDocument(json: string): SemanticDocument {
   }
   return SemanticDocumentSchema.parse(raw);
 }
+
+/**
+ * A copy with capture-time provenance dropped.
+ *
+ * `capturedAt` records when a URL was fetched, so two captures of the same
+ * page differ by design. Byte comparisons — fixtures, determinism checks,
+ * "did this re-ingest change anything?" — want everything *except* that, so
+ * they compare through this.
+ */
+export function withoutCaptureTime(doc: SemanticDocument): SemanticDocument {
+  if (doc.source.capturedAt === undefined) return doc;
+  const source = { ...doc.source };
+  delete source.capturedAt;
+  return { ...doc, source };
+}
