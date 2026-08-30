@@ -14,7 +14,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ingestMarkdown } from "../src/ingest/index.js";
 import { serializeDocument } from "../src/semantic/serialize.js";
-import type { ContentBlock, SemanticDocument } from "../src/semantic/schema.js";
+import type { SemanticDocument } from "../src/semantic/schema.js";
 import { loadCanon } from "../src/canon/index.js";
 import { validatePlanAgainstDocument } from "../src/art-direction/index.js";
 import type { ArtDirectionPlan } from "../src/art-direction/schema.js";
@@ -34,36 +34,6 @@ const pkgRoot = join(here, "..");
 const repoRoot = join(pkgRoot, "..");
 const demoDir = join(repoRoot, "examples", "demo");
 const CANONS = ["modern-editorial", "literary-classic", "swiss-clean"] as const;
-
-/**
- * The Editor pass: promote the fixture's marked paragraphs into semantic
- * statistic and callout blocks. (In real use the host agent does this
- * judgment; the demo script does it deterministically.)
- */
-function editorPass(doc: SemanticDocument): SemanticDocument {
-  const sections = doc.sections.map((section) => {
-    const blocks = section.blocks.map((block): ContentBlock => {
-      if (block.type !== "paragraph") return block;
-      const text = block.content.text.replace(/\n/g, " ");
-      const stat = text.match(/^STAT: (.+?) — (.+)$/);
-      if (stat) {
-        return { id: block.id, type: "statistic", value: stat[1]!, label: stat[2]! };
-      }
-      const callout = text.match(/^CALLOUT: (.+?) — (.+)$/);
-      if (callout) {
-        return {
-          id: block.id,
-          type: "callout",
-          title: callout[1]!,
-          content: { text: callout[2]!, links: [], marks: [] },
-        };
-      }
-      return block;
-    });
-    return { ...section, blocks };
-  });
-  return { ...doc, sections };
-}
 
 /** The Art Director pass: the plan, authored once, reused by every canon. */
 function artDirectionPlan(doc: SemanticDocument): ArtDirectionPlan {
@@ -170,7 +140,7 @@ async function main(): Promise<void> {
   const source = await readFile(sourcePath, "utf8");
 
   // Ingest + editor pass — ONCE. Every canon receives these same bytes.
-  const doc = editorPass(ingestMarkdown(source, "./source.md"));
+  const doc = ingestMarkdown(source, "./source.md");
   const plan = artDirectionPlan(doc);
   const validation = validatePlanAgainstDocument(plan, doc);
   if (!validation.ok) throw new Error("demo plan invalid:\n" + validation.errors.join("\n"));

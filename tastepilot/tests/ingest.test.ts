@@ -28,9 +28,7 @@ describe("markdown ingestion", () => {
 
   it("handles the long guide: tables, images, ordered lists, quotes", () => {
     const doc = ingestMarkdown(fixture("long-guide.md"), "x.md");
-    expect(doc.metadata.title).toBe(
-      "The Working Writer's Guide to Publishing Without a Designer",
-    );
+    expect(doc.metadata.title).toBe("The Working Writer's Guide to Publishing Without a Designer");
     const types = doc.sections.flatMap((s) => s.blocks.map((b) => b.type));
     expect(types).toContain("table");
     expect(types).toContain("image");
@@ -137,7 +135,10 @@ describe("html ingestion", () => {
 
 describe("text ingestion", () => {
   it("treats a short first line as the title and keeps paragraphs verbatim", () => {
-    const doc = ingestText("My Notes\n\nFirst paragraph line one.\nLine two.\n\nSecond.\n", "n.txt");
+    const doc = ingestText(
+      "My Notes\n\nFirst paragraph line one.\nLine two.\n\nSecond.\n",
+      "n.txt",
+    );
     expect(doc.metadata.title).toBe("My Notes");
     const blocks = doc.sections[0]!.blocks;
     expect(blocks).toHaveLength(2);
@@ -152,5 +153,57 @@ describe("source router", () => {
     expect(kindForPath("a.html")).toBe("html");
     expect(kindForPath("a.txt")).toBe("text");
     expect(() => kindForPath("a.docx")).toThrow(/unsupported/);
+  });
+});
+
+describe("statistic and callout conventions", () => {
+  const blocks = (md: string) => ingestMarkdown(md, "x.md").sections[0]!.blocks;
+
+  it("promotes STAT: into a statistic block", () => {
+    const [block] = blocks("STAT: 38% — of readers abandon hard-to-read documents\n");
+    expect(block).toEqual({
+      id: "section-1-statistic-1",
+      type: "statistic",
+      value: "38%",
+      label: "of readers abandon hard-to-read documents",
+    });
+  });
+
+  it("promotes CALLOUT: and keeps the body's links and emphasis", () => {
+    const [block] = blocks(
+      "CALLOUT: The rule — Every section gets **one** visual, see [here](https://example.com).\n",
+    );
+    expect(block?.type).toBe("callout");
+    if (block?.type !== "callout") throw new Error("expected a callout");
+    expect(block.title).toBe("The rule");
+    expect(block.content.text).toBe("Every section gets one visual, see here.");
+    // Offsets are relative to the body, not to the original paragraph.
+    const mark = block.content.marks[0]!;
+    const link = block.content.links[0]!;
+    expect(mark.kind).toBe("strong");
+    expect(block.content.text.slice(mark.start, mark.end)).toBe("one");
+    expect(link.href).toBe("https://example.com");
+    expect(block.content.text.slice(link.start, link.end)).toBe("here");
+  });
+
+  it("reads a separator that the author wrapped across lines", () => {
+    const [block] = blocks("STAT: 4 seconds —\nthe average time before a reader scrolls\n");
+    expect(block).toMatchObject({
+      type: "statistic",
+      value: "4 seconds",
+      label: "the average time before a reader scrolls",
+    });
+  });
+
+  it("RED LINE: leaves prose alone when the em dash is missing", () => {
+    const [block] = blocks("STAT: this is a sentence about statistics, not a statistic\n");
+    expect(block?.type).toBe("paragraph");
+    if (block?.type !== "paragraph") throw new Error("expected a paragraph");
+    expect(block.content.text).toBe("STAT: this is a sentence about statistics, not a statistic");
+  });
+
+  it("only matches the prefix at the start of a paragraph", () => {
+    const [block] = blocks("The label reads STAT: 38% — of readers, which is a quotation.\n");
+    expect(block?.type).toBe("paragraph");
   });
 });
