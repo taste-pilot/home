@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { mkdir, writeFile } from "node:fs/promises";
-import { realpathSync } from "node:fs";
+import { existsSync, realpathSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs, flagValue, type ParsedArgs } from "./args.js";
@@ -35,7 +35,7 @@ const USAGE: Record<string, string> = {
     "tastepilot render --document <json> --canon <id> --plan <json> [--manifest <json>] [--assets <dir>] [--brand-dna <json> --mode <m>] [--out <dir>]",
   pdf: "tastepilot pdf <path/to/index.html> [--format letter|a4] [--out <file>]",
   qa: "tastepilot qa [publication-dir]",
-  canon: "tastepilot canon validate|list|install <path/to/canon-folder>",
+  canon: "tastepilot canon validate <dir> | canon install <dir | id[@version]> | canon list",
 };
 
 function usageError(command: string, detail?: string): number {
@@ -48,6 +48,36 @@ function usageError(command: string, detail?: string): number {
 function rejectUnknownFlags(command: string, args: ParsedArgs): number | undefined {
   if (args.unknown.length === 0) return undefined;
   return usageError(command, `unknown option ${args.unknown.join(", ")}`);
+}
+
+/** `canon install <id>[@version]` — only reachable with a registry configured. */
+async function installFromRegistry(spec: string): Promise<number> {
+  const { HttpCanonRegistry, CANON_URL_ENV, installCanonStyle } = await import("../canon/index.js");
+  const url = process.env[CANON_URL_ENV];
+  if (!url) {
+    process.stderr.write(
+      `tastepilot: no canon folder at "${spec}", and no registry configured — ` +
+        `set ${CANON_URL_ENV} to install a canon by id\n`,
+    );
+    return 1;
+  }
+  const at = spec.lastIndexOf("@");
+  const id = at > 0 ? spec.slice(0, at) : spec;
+  const version = at > 0 ? spec.slice(at + 1) : undefined;
+
+  let style;
+  try {
+    style = await new HttpCanonRegistry(url).fetch(id, version);
+  } catch (err) {
+    process.stdout.write(`✗ refusing to install this canon:\n  - ${(err as Error).message}\n`);
+    return 1;
+  }
+  await installCanonStyle(style);
+  process.stdout.write(
+    `✓ installed ${style.manifest.id}@${style.manifest.version} from the registry — ` +
+      `now listed as a "local" canon source\n`,
+  );
+  return 0;
 }
 
 export async function main(argv: string[] = process.argv.slice(2)): Promise<number> {
@@ -95,7 +125,11 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
     const { serializeDocument } = await import("../semantic/serialize.js");
     const result = await ingestUrl(url);
     await mkdir(outDir, { recursive: true });
-    await writeFile(join(outDir, "semantic-document.json"), serializeDocument(result.document), "utf8");
+    await writeFile(
+      join(outDir, "semantic-document.json"),
+      serializeDocument(result.document),
+      "utf8",
+    );
     await writeFile(
       join(outDir, "brand-dna.json"),
       JSON.stringify(result.brandDna, null, 2) + "\n",
@@ -222,9 +256,7 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
     const dir = args.positionals[0] ?? join("output", "publication");
     const { runQa } = await import("../qa/index.js");
     const report = await runQa(dir);
-    process.stdout.write(
-      report.pass ? `✓ QA passed for ${dir}\n` : `✗ QA FAILED for ${dir}\n`,
-    );
+    process.stdout.write(report.pass ? `✓ QA passed for ${dir}\n` : `✗ QA FAILED for ${dir}\n`);
     for (const f of report.failures) {
       process.stdout.write(`  ✗ [${f.viewport}] ${f.check}: ${f.detail}\n`);
     }
@@ -268,9 +300,15 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
 
     if (sub === "install") {
       if (!target) {
-        process.stderr.write("usage: tastepilot canon install <path/to/canon-folder>\n");
+        process.stderr.write(
+          "usage: tastepilot canon install <path/to/canon-folder | id[@version]>\n",
+        );
         return 1;
       }
+      // A folder installs from disk; anything else is a registry id, which
+      // only works when the user has configured a registry.
+      if (!existsSync(target)) return installFromRegistry(target);
+
       const { installCanon } = await import("../canon/index.js");
       const result = await installCanon(target);
       if (!result.ok) {
@@ -294,7 +332,7 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<numb
       return 0;
     }
 
-    process.stderr.write("usage: tastepilot canon validate|install <dir> | canon list\n");
+    process.stderr.write(USAGE["canon"]! + "\n");
     return 1;
   }
 

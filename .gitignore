@@ -6,5 +6,7 @@ blob-report/
 dist/
 *.log
 .DS_Store
+tastepilot/canon/installed/
+tastepilot/canon/cache/
 examples/demo/**/qa/*.png
 site/_strip.html
