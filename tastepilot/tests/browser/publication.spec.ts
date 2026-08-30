@@ -7,6 +7,8 @@ import { ingestMarkdown } from "../../src/ingest/index.js";
 import { loadCanon } from "../../src/canon/index.js";
 import { validatePlanAgainstDocument } from "../../src/art-direction/index.js";
 import { renderPublication } from "../../src/renderer/index.js";
+import { composePdf } from "../../src/print/index.js";
+import { PDFDocument } from "pdf-lib";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const CANONS = ["modern-editorial", "literary-classic", "swiss-clean"];
@@ -69,9 +71,7 @@ test("theme control: explicit choice applies and persists across reload", async 
   await page.goto(url);
   await page.getByRole("button", { name: "Dark" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
-  const darkBg = await page.evaluate(() =>
-    getComputedStyle(document.body).backgroundColor,
-  );
+  const darkBg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(darkBg);
@@ -94,9 +94,7 @@ test("reduced motion: everything visible, no reveal classes applied", async ({ p
   await page.emulateMedia({ reducedMotion: "reduce" });
   const url = pathToFileURL(join(pubDirs.get("modern-editorial")!, "index.html")).href;
   await page.goto(url);
-  const hiddenCount = await page.evaluate(
-    () => document.querySelectorAll(".motion-hidden").length,
-  );
+  const hiddenCount = await page.evaluate(() => document.querySelectorAll(".motion-hidden").length);
   expect(hiddenCount).toBe(0);
   const opacity = await page.evaluate(() => {
     const el = document.querySelector(".pull-quote");
@@ -115,9 +113,7 @@ test("motion reveals appear on scroll without touching body paragraphs", async (
   expect(paragraphHidden, "body text must stay stable").toBe(false);
   await page.mouse.wheel(0, 20000);
   await page.waitForTimeout(900);
-  const stillHidden = await page.evaluate(
-    () => document.querySelectorAll(".motion-hidden").length,
-  );
+  const stillHidden = await page.evaluate(() => document.querySelectorAll(".motion-hidden").length);
   expect(stillHidden).toBe(0);
 });
 
@@ -128,11 +124,33 @@ test("no broken images and JS-free reading works", async ({ browser }) => {
   await expect(page.locator(".pub-title")).toBeVisible();
   const controlVisible = await page.locator(".theme-control").isVisible();
   expect(controlVisible, "theme control stays hidden without JS").toBe(false);
-  const brokenImages = await page.evaluate(() =>
-    Array.from(document.images).filter(
-      (img) => img.src && !img.src.startsWith("data:") && img.naturalWidth === 0 && img.complete,
-    ).length,
+  const brokenImages = await page.evaluate(
+    () =>
+      Array.from(document.images).filter(
+        (img) => img.src && !img.src.startsWith("data:") && img.naturalWidth === 0 && img.complete,
+      ).length,
   );
   expect(brokenImages).toBe(0);
   await context.close();
+});
+
+test("RED LINE: the print edition is byte-identical across composes", async () => {
+  const dir = pubDirs.get("swiss-clean")!;
+  const index = join(dir, "index.html");
+
+  const first = await composePdf(index, { out: join(dir, "first.pdf") });
+  const second = await composePdf(index, { out: join(dir, "second.pdf") });
+  expect(second.pageCount).toBe(first.pageCount);
+
+  const [a, b] = await Promise.all([readFile(first.path), readFile(second.path)]);
+  // Chromium stamps wall-clock CreationDate/ModDate; composePdf normalizes them.
+  expect(b.equals(a), "same publication must compose to the same bytes").toBe(true);
+
+  const pdf = await PDFDocument.load(a, { updateMetadata: false });
+  expect(pdf.getCreationDate()?.getTime()).toBe(0);
+  expect(pdf.getModificationDate()?.getTime()).toBe(0);
+  // Named for us, not for whichever Chromium built it — so a browser upgrade
+  // does not churn the bytes either.
+  expect(pdf.getProducer()).toBe("tastepilot");
+  expect(pdf.getCreator()).toBe("tastepilot");
 });
