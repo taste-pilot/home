@@ -8,7 +8,13 @@ import type { CanonSummary } from "./load.js";
 
 /**
  * The remote half of the Canon sources: Community and Library styles served by
- * a registry API.
+ * a registry.
+ *
+ * The endpoint shape is deliberately static-hostable — `/canons.json`,
+ * `/canons/<id>.json`, `/canons/<id>/<version>.json`. A folder of files can
+ * serve it, which is how the Community Canon repository publishes; a dynamic
+ * API can serve the same paths. (An `/canons` endpoint alongside `/canons/:id`
+ * cannot be static at all: one name cannot be both a file and a directory.)
  *
  * Everything here treats the response as hostile input. A registry can serve
  * structured Canon data and nothing else — the payload is parsed as JSON,
@@ -91,7 +97,7 @@ export class HttpCanonRegistry implements CanonRegistry {
   /** Registry listing, falling back to whatever the cache already holds. */
   async list(): Promise<CanonSummary[]> {
     try {
-      const body = await this.get(`${this.baseUrl}/canons`);
+      const body = await this.get(`${this.baseUrl}/canons.json`);
       const parsed = ListSchema.parse(body);
       return parsed.canons.map((c) => ({ ...c, source: "community" as const }));
     } catch {
@@ -113,8 +119,8 @@ export class HttpCanonRegistry implements CanonRegistry {
       if (cached) return cached;
     }
     const url = version
-      ? `${this.baseUrl}/canons/${encodeURIComponent(id)}/${encodeURIComponent(version)}`
-      : `${this.baseUrl}/canons/${encodeURIComponent(id)}`;
+      ? `${this.baseUrl}/canons/${encodeURIComponent(id)}/${encodeURIComponent(version)}.json`
+      : `${this.baseUrl}/canons/${encodeURIComponent(id)}.json`;
 
     let body: unknown;
     try {

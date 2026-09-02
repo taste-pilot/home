@@ -40,6 +40,30 @@ describe("HttpCanonRegistry", () => {
     expect(style.typography.body.family.length).toBeGreaterThan(0);
   });
 
+  it("requests paths a static file tree can serve", async () => {
+    const mock = await started();
+    const asked: string[] = [];
+    const client = new HttpCanonRegistry(mock.url, {
+      cacheDir: await cache(),
+      fetchImpl: ((url: string | URL | Request, init?: RequestInit) => {
+        asked.push(new URL(String(url)).pathname);
+        return fetch(url as string, init);
+      }) as typeof fetch,
+    });
+
+    await client.list();
+    await client.fetch("swiss-clean");
+    await client.fetch("swiss-clean", "9.9.9").catch(() => undefined);
+
+    // Every path is a file, never a bare directory name: "/canons" and
+    // "/canons/<id>" cannot both exist in a static tree.
+    expect(asked).toEqual([
+      "/canons.json",
+      "/canons/swiss-clean.json",
+      "/canons/swiss-clean/9.9.9.json",
+    ]);
+  });
+
   it("RED LINE: refuses a canon carrying agent instructions", async () => {
     const mock = await started();
     const client = new HttpCanonRegistry(mock.url, { cacheDir: await cache() });
