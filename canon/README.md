@@ -50,6 +50,16 @@ With the variable unset there is no remote source in the chain at all — not a 
 - **Offline is not an error.** Fetched Canons are cached under `tastepilot/canon/cache/`; when the registry cannot be reached, the cache answers. A cache entry is re-validated on the way out, because a file on disk can be edited.
 - **A registry never outranks what you already have.** It is one source among several, consulted in order.
 
+A registry is a folder of JSON, not a service. The client asks for three paths, all of them files:
+
+```
+canons.json                       # { "canons": [ { id, name, version, description, tags } ] }
+canons/<id>.json                  # the current version, as a full Canon
+canons/<id>/<version>.json        # a pinned version
+```
+
+Any static host can serve that, which is how the Community Canon repository publishes. A dynamic API can serve the same paths when one is worth building.
+
 ## Creating a Canon
 
 The authoring guide, schema reference, and `tastepilot canon validate` tooling ship with v0.1. The registry client ships with v0.2. The Community Canon repository itself — submissions, forks, attribution, automated validation — follows after launch.

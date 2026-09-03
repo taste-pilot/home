@@ -1,10 +1,11 @@
 /**
  * A tiny Canon registry, for development and tests.
  *
- * It serves the bundled starters over the same shape the real registry API
- * will: `GET /canons` for the listing, `GET /canons/:id[/:version]` for one
- * canon. Enough to exercise the client's validation, caching, versioning and
- * offline fallback without inventing a service.
+ * It serves the bundled starters over the shape a real registry publishes:
+ * `/canons.json` for the listing, `/canons/<id>.json` and
+ * `/canons/<id>/<version>.json` for one canon — paths a static file tree can
+ * serve as-is. Enough to exercise the client's validation, caching,
+ * versioning and offline fallback without inventing a service.
  */
 import { createServer, type Server } from "node:http";
 import { join, dirname } from "node:path";
@@ -42,7 +43,7 @@ export async function startMockRegistry(
       res.end(text);
     };
     const path = (req.url ?? "").split("?")[0] ?? "";
-    if (path === "/canons") {
+    if (path === "/canons.json") {
       return send(200, {
         canons: [...canons.values()].map((c) => {
           const style = c as CanonStyle;
@@ -56,7 +57,7 @@ export async function startMockRegistry(
         }),
       });
     }
-    const match = /^\/canons\/([^/]+)(?:\/([^/]+))?$/.exec(path);
+    const match = /^\/canons\/([^/]+?)(?:\/([^/]+?))?\.json$/.exec(path);
     if (match) {
       const style = canons.get(decodeURIComponent(match[1]!));
       if (!style) return send(404, { error: "unknown canon" });
